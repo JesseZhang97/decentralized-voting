@@ -1,12 +1,12 @@
 /*
- * @Date: 2020-03-13 22:22:46
+ * @Date: 2020-03-15 03:36:00
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-13 22:41:29
- * @FilePath: /decentralized-voting/vapp/src/store/module/user.js
+ * @LastEditTime: 2020-03-15 03:36:00
+ * @FilePath: /decentralized-voting/vapp/src/store/modules/user.js
  * @Description: 
  */
 import { login } from '@/api/login'//引入登录 api 接口
- 
+
 const user = {
   actions: {
     // 登录
@@ -23,5 +23,4 @@ const user = {
     },
   }
 }
-
 export default user

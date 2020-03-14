@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-13 18:48:53
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-13 20:03:30
- * @FilePath: /decentralized-voting/vapp/src/views/Register.vue
+ * @LastEditTime: 2020-03-15 01:26:14
+ * @FilePath: /vapp/src/views/Register.vue
  * @Description: 注册帐号页面
  -->
 <!--
@@ -58,64 +58,33 @@ export default {
 
     //登录逻辑
     register(){
-      var reg =/^[\u4e00-\u9fa5]$/
+      // var reg =/^[^\x00-\xff]/
 
-      if( this.account == '' || this.password == '' || this.name == '' || this.organization == '' ) {
+      if( !this.account || !this.password || !this.name || !this.organization ) {
         this.$notify.error({
         title: '错误',
         message: '请填写全部注册内容'
         });
-      } else if ( reg.test(this.name) ==false ) {
-          this.$notify.error({
-          title: '错误',
-          message: '请输入中文姓名'
-          });
       } else {
         this.toLogin()
+        // if ( !reg.test(this.username) ) {
+        //   this.$notify.error({
+        //   title: '错误',
+        //   message: '请输入中文姓名'
+        //   });
+        // } else
+        // {
+        //   this.toLogin()
+        // }
       }
+      
   },
 
     //登录请求
     toLogin(){
-
-      //一般要跟后端了解密码的加密规则
-      //这里例子用的哈希算法来自./js/sha1.min.js
-      //let password_sha = sha1.hex_sha1(sha1.hex_sha1( this.password ));
-
-      //需要向后端发送的登录参数
-      // let loginParam = {
-      // account: this.account,
-      // password_sha
-      // }
-
-      //设置在登录状态
-      this.isLoging = true;
       
-      //请求后端,比如:
-      /*this.$http.post( 'example.com/login.php', {
-      param: loginParam).then((response) => {
-        if(response.data.code == 1){
-          let expireDays = 1000 * 60 * 60 * 24 * 15;
-          this.setCookie('session', response.data.session, expireDays);
-          //登录成功后
-          this.$router.push('/user_info'); 
-        }
-      }, (response) => {
-	        //Error
-      });
-      */
-
-      //演示用
-      setTimeout(()=>{
-        //登录状态15天后过期
-        let expireDays = 1000 * 60 * 60 * 24 * 15;
-        this.setCookie('session','blablablablabla...', expireDays);
-        this.isLoging = false;
-        //登录成功后
-        this.$router.push('/user_info/');
-      }, 3000)
-    }
   }
+}
 }
 </script>
 

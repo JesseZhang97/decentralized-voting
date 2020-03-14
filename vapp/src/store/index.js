@@ -1,24 +1,13 @@
-/*
- * @Date: 2020-03-13 22:00:00
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-13 22:42:23
- * @FilePath: /decentralized-voting/vapp/src/store/index.js
- * @Description: 
- */
-import Vue from 'vue'
-import Vuex from 'vuex'
-import user from './module/user' 
+import Vue from 'vue' //引入 Vue
+import Vuex from 'vuex' //引入 Vuex
+import user from './modules/user' //引入 user module
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+const store = new Vuex.Store({
   modules: {
-    user
+    user //使用 user.js 中的 action
   }
 })
+
+export default store

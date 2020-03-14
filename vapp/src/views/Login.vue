@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-13 18:15:22
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-13 22:54:06
+ * @LastEditTime: 2020-03-15 03:36:57
  * @FilePath: /decentralized-voting/vapp/src/views/Login.vue
  * @Description: 用户登录页面
  -->
@@ -18,8 +18,8 @@
         <div class="log-text">Welcome!</div>
     </div>
     <div class="log-email">
-        <input type="text" placeholder="帐号" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="loginInfo.account">
-        <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="loginInfo.password">
+        <input type="text" placeholder="帐号" :class="'log-input' + (loginInfo.account==''?' log-input-empty':'')" v-model="loginInfo.account">
+        <input type="password" placeholder="密码" :class="'log-input' + (loginInfo.password==''?' log-input-empty':'')"  v-model="loginInfo.password">
         <a href="javascript:;" class="log-btn" @click="login">Login</a>
     </div>
     <router-link to="/register"> <div class="log-text">没有帐号？点此注册</div> </router-link>
@@ -36,9 +36,10 @@ export default {
     return {
       isLoging: false,
       loginInfo:{
-          account: 'admin',
-          password: '123456',
-      }
+          account: '',
+          password: '',
+      },
+      responseResult: []
     }
   },
   components:{
@@ -47,7 +48,7 @@ export default {
   methods:{
     //登录逻辑
     login(){
-      if(this.account == '' || this.password == '') {
+      if( !this.loginInfo.account || !this.loginInfo.password ) {
       this.$notify.error({
           title: '错误',
           message: '帐号密码不能为空'
@@ -55,37 +56,32 @@ export default {
       } else {
         this.toLogin();
       }
-      // if(this.account!='' && this.password!=''){
-        
-      // }
     },
     toLogin(){
-      this.isLoging = true;
       this.$store
-        .dispatch("Login", this.loginInfo)
-        .then(response=>{
+      .dispatch("Login", this.loginInfo)
+      .then(response => {
+        this.isLoging = true;
+        let code = response.data.code;
+        if (code == 200) {
+          this.$router.replace({path: '/index'})
+        } else {
           this.isLoging = false;
-          let code = response.data.code;
-          if ( code == 200) {
-            this.$message({
-            message: '恭喜你，这是一条成功消息',
-            type: 'success'
-            });
-
-            this.$router.push({
-              path: "/home",
-              query: { data:response.data.data }
-            });
-          } else {
-            this.$message.error('错了哦，这是一条错误消息');
-          }
-        })
-        .catch( () => {
-          this.loading = false;
-        });
+          this.loginInfo.account = '';
+          this.loginInfo.password = '';
+          this.$notify.error({
+          title: '错误',
+          message: '用户名或密码输入错误'
+          });
+        }
+      })
+      .catch(() => {
+        this.loading = false;
+      });
     }
+      
+    } 
   }
-}
 </script>
 
 <style scoped>

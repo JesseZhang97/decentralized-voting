@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-14 02:55:45
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-14 03:23:18
+ * @LastEditTime: 2020-03-15 01:00:33
  * @FilePath: /backend/src/main/java/com/zz/backend/DemoApplication.java
  * @Description: 
  */
@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 //加载mybatis的mapper接口所在的路径
-@MapperScan("com.zz.backend")
+@MapperScan("com.zz.backend.mapper")
 public class DemoApplication {
 
 	public static void main(String[] args) {
