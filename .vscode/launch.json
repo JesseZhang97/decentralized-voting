@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - DemoApplication",
+      "request": "launch",
+      "mainClass": "com.zz.backend.DemoApplication",
+      "projectName": "backend"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - VueLoginJavaApplication",
+      "request": "launch",
+      "mainClass": "cn.eli.vue.VueLoginJavaApplication"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-VueLoginJavaApplication<vue-login-java>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "cn.eli.vue.VueLoginJavaApplication",
+      "projectName": "vue-login-java",
+      "args": ""
+    }
+  ]
+}
