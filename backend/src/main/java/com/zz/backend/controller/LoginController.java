@@ -7,7 +7,6 @@
  */
 package com.zz.backend.controller;
 
-import com.zz.backend.api.CommonResult;
 import com.zz.backend.api.Result;
 //import com.zz.backend.api.IErrorCode;
 import com.zz.backend.entity.User;

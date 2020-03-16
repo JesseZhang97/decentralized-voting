@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-16 18:17:20
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-16 21:14:30
+ * @LastEditTime: 2020-03-17 02:28:49
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/service/impl/UserServiceImpl.java
  * @Description: 
  */
@@ -40,4 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 		// usercondition.setPassword(user.getPassword());
 		return userMapper.selectOne(wrapper);
   }
+  // public User set(User user) {
+    
+  // }
 }

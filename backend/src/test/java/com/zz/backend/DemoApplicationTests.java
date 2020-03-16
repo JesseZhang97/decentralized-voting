@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-14 03:10:38
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-16 21:21:45
+ * @LastEditTime: 2020-03-17 02:41:25
  * @FilePath: /decentralized-voting/backend/src/test/java/com/zz/backend/DemoApplicationTests.java
  * @Description: 
  */
@@ -33,6 +33,14 @@ public class DemoApplicationTests {
 	
 	@Test
 	public void contextLoads() throws SQLException {
+		User user = new User();
+		user.setAccount("59773");
+		user.setPassword("12345");
+		user.setName("张");
+		user.setOrganization("1602");
+
+		int insert = userMapper.insert(user);
+		System.out.println(user.getId());
 		// System.out.println(datasource.getConnection());
 		// QueryWrapper<User> wrapper = new QueryWrapper<User>();
 		// wrapper.eq("account", "admin");
@@ -48,6 +56,7 @@ public class DemoApplicationTests {
 		// 	for (User user : userlist) {
 		// 		System.out.println(user);
 		// 	}
+	
 	}
 
 }
