@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 03:27:40
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-15 03:27:52
+ * @LastEditTime: 2020-03-16 21:28:44
  * @FilePath: /decentralized-voting/vapp/src/router/index.js
  * @Description: 
  */
@@ -12,7 +12,14 @@ Vue.use(VueRouter); //安装插件
 
 export const constantRouterMap = [
     //配置默认的路径，默认显示登录页
-    { path: '/', component: () => import('@/views/Login')},
+    {   path: '/',
+        redirect: '/login'
+    },
+
+    {
+        path: '/login',
+        component: () => import('@/views/Login')
+    },
 
     //配置登录成功页面，使用时需要使用 path 路径来实现跳转
     { path: '/register', component: () => import('@/views/Register')},
@@ -22,7 +29,7 @@ export const constantRouterMap = [
 ]
 
 export default new VueRouter({
-    // mode: 'history', //后端支持可开
+    mode: 'history', //后端支持可开
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap //指定路由列表
 })

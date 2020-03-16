@@ -1,8 +1,8 @@
 <!--
  * @Date: 2020-03-13 18:48:53
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-15 01:26:14
- * @FilePath: /vapp/src/views/Register.vue
+ * @LastEditTime: 2020-03-17 01:20:55
+ * @FilePath: /decentralized-voting/vapp/src/views/Register.vue
  * @Description: 注册帐号页面
  -->
 <!--
@@ -25,10 +25,10 @@
         <div class="log-text">realVoting</div>
     </div>
     <div class="log-email">
-        <input type="text" placeholder="帐号" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="account">
-        <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-        <input type="text" placeholder="姓名" :class="'log-input' + (name==''?' log-input-empty':'')"  v-model="name">
-        <input type="text" placeholder="所属组织" :class="'log-input' + (organization==''?' log-input-empty':'')"  v-model="organization">
+        <input type="text" placeholder="帐号" :class="'log-input' + (userInfo.account==''?' log-input-empty':'')" v-model="userInfo.account">
+        <input type="password" placeholder="密码" :class="'log-input' + (userInfo.password==''?' log-input-empty':'')"  v-model="userInfo.password">
+        <input type="text" placeholder="姓名" :class="'log-input' + (userInfo.name==''?' log-input-empty':'')"  v-model="userInfo.name">
+        <input type="text" placeholder="所属组织" :class="'log-input' + (userInfo.organization==''?' log-input-empty':'')"  v-model="userInfo.organization">
         <a href="javascript:;" class="log-btn" @click="register">注册</a>
     </div>
     <div class="log-text">基于ethereum区块链技术</div>
@@ -45,10 +45,12 @@ export default {
   data(){
     return {
       isLoging: false,
-      account: '',
-      password: '',
-      name:'',
-      organization:''
+      userInfo:{
+        account: '',
+        password: '',
+        name:'',
+        organization:''
+      }
     }
   },
   components:{
@@ -58,31 +60,55 @@ export default {
 
     //登录逻辑
     register(){
-      // var reg =/^[^\x00-\xff]/
+      var reg =/^[\u4e00-\u9fa5]/
 
-      if( !this.account || !this.password || !this.name || !this.organization ) {
+      if( !this.userInfo.account || !this.userInfo.password || !this.userInfo.name || !this.userInfo.organization ) {
         this.$notify.error({
         title: '错误',
         message: '请填写全部注册内容'
         });
+      } else if (!reg.test(this.userInfo.name)) {
+        this.$notify.error({
+          title: '错误',
+          message: '请输入中文姓名'
+          });
       } else {
         this.toLogin()
-        // if ( !reg.test(this.username) ) {
-        //   this.$notify.error({
-        //   title: '错误',
-        //   message: '请输入中文姓名'
-        //   });
-        // } else
-        // {
-        //   this.toLogin()
-        // }
       }
-      
   },
 
     //登录请求
     toLogin(){
-      
+    this.isLoging = true
+    this.$store
+    .dispatch("Register", this.userInfo)
+    .then(response => {
+      let code = response.data.code;
+      if (code == 200) {
+        this.$notify({
+          title: '注册',
+          message: '帐号已成功注册,即将转入登录页面',
+          type: 'success'
+        });
+        this.$router.push({ 
+          path: '/login',
+          query: { data: "response.data.data" }
+          //query: { data: response.data.data }
+        });
+        this.isLoging = false;
+      } else {
+        this.isLoging = false;
+        this.userInfo.account = '';
+        this.userInfo.password = '';
+        this.userInfo.name = '';
+        this.userInfo.organization = ''
+        this.$notify.error({
+          title: '错误',
+          message: '注册失败,请重新尝试'
+        });
+      }
+    })
+
   }
 }
 }

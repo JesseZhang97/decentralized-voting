@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-13 18:15:22
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-15 03:36:57
+ * @LastEditTime: 2020-03-17 01:02:26
  * @FilePath: /decentralized-voting/vapp/src/views/Login.vue
  * @Description: 用户登录页面
  -->
@@ -30,6 +30,7 @@
 
 <script>
 import Loading from './Loading.vue'
+
 export default {
   name: 'Login',
   data(){
@@ -48,6 +49,8 @@ export default {
   methods:{
     //登录逻辑
     login(){
+      var sha256 = require('js-sha256').sha256;
+      this.loginInfo.password = sha256(this.loginInfo.password) 
       if( !this.loginInfo.account || !this.loginInfo.password ) {
       this.$notify.error({
           title: '错误',
@@ -58,13 +61,14 @@ export default {
       }
     },
     toLogin(){
+      this.isLoging = true;
       this.$store
       .dispatch("Login", this.loginInfo)
       .then(response => {
-        this.isLoging = true;
         let code = response.data.code;
         if (code == 200) {
-          this.$router.replace({path: '/index'})
+          this.$router.replace({path: '/home'})
+          this.isLoging = false
         } else {
           this.isLoging = false;
           this.loginInfo.account = '';
