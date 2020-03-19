@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-17 00:54:59
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 00:54:59
+ * @LastEditTime: 2020-03-17 20:47:16
  * @FilePath: /decentralized-voting/vapp/src/store/index.js
  * @Description: 
  */
@@ -13,6 +13,12 @@ import userRegister from './modules/userRegister'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  state: {
+    userInfo: {},
+    isLogin: '',
+  },
+  mutations: {
+  },
   modules: {
     user, //使用 user.js 中的 action
     userRegister

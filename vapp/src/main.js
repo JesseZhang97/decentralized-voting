@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-03-15 00:35:01
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-15 00:35:02
- * @FilePath: /vapp/src/main.js
+ * @LastEditTime: 2020-03-17 20:47:02
+ * @FilePath: /decentralized-voting/vapp/src/main.js
  * @Description: 
  */
 

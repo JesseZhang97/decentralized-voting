@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-13 18:48:53
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 01:20:55
+ * @LastEditTime: 2020-03-17 19:15:30
  * @FilePath: /decentralized-voting/vapp/src/views/Register.vue
  * @Description: 注册帐号页面
  -->
@@ -79,6 +79,9 @@ export default {
 
     //登录请求
     toLogin(){
+    var sha256 = require('js-sha256').sha256;
+    this.userInfo.password = sha256(this.userInfo.password)
+
     this.isLoging = true
     this.$store
     .dispatch("Register", this.userInfo)
@@ -92,7 +95,7 @@ export default {
         });
         this.$router.push({ 
           path: '/login',
-          query: { data: "response.data.data" }
+          query: { data: response.data.data }
           //query: { data: response.data.data }
         });
         this.isLoging = false;

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 03:27:40
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-16 21:28:44
+ * @LastEditTime: 2020-03-19 03:22:37
  * @FilePath: /decentralized-voting/vapp/src/router/index.js
  * @Description: 
  */
@@ -21,11 +21,18 @@ export const constantRouterMap = [
         component: () => import('@/views/Login')
     },
 
-    //配置登录成功页面，使用时需要使用 path 路径来实现跳转
     { path: '/register', component: () => import('@/views/Register')},
 
-    //配置登录失败页面，使用时需要使用 path 路径来实现跳转
-    { path: '/home', component: () => import('@/views/Home')}
+    { 
+        path: '/home', component: () => import('@/views/Home'), 
+        meta: {
+            requireAuth: true
+        }
+    },
+
+    {
+        path: '/infopage', component: () => import('@/views/InfoPaper'),
+    }
 ]
 
 export default new VueRouter({
