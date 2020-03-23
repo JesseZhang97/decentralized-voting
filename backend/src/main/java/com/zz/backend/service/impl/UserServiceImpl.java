@@ -1,22 +1,22 @@
 /*
  * @Date: 2020-03-16 18:17:20
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 02:28:49
+ * @LastEditTime: 2020-03-21 03:09:07
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/service/impl/UserServiceImpl.java
- * @Description: 
+ * @Description: 用户的登录与注册
  */
 package com.zz.backend.service.impl;
 
+import com.zz.backend.api.Result;
 import com.zz.backend.entity.User;
 import com.zz.backend.mapper.UserMapper;
-import com.zz.backend.service.IUserService;
+// import com.zz.backend.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.sf.jsqlparser.statement.select.Select;
 
 /**
  * <p>
@@ -27,7 +27,7 @@ import net.sf.jsqlparser.statement.select.Select;
  * @since 2020-03-16
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> {
   @Autowired
   private UserMapper userMapper;
   //登录
@@ -35,12 +35,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     QueryWrapper<User> wrapper = new QueryWrapper<User>();
 		wrapper.eq("account", user.getAccount());
 		wrapper.eq("password", user.getPassword());
-    // User usercondition = new User();
-    // usercondition.setAccount(user.getAccount());
-		// usercondition.setPassword(user.getPassword());
-		return userMapper.selectOne(wrapper);
+
+    return userMapper.selectOne(wrapper);
   }
-  // public User set(User user) {
+  /**
+   * @description: 注册
+   * @param {User} 
+   * @return: int
+   */
+  public Result set(User user) {
+		user.setAccount(user.getAccount());
+		user.setPassword(user.getPassword());
+    user.setName(user.getName());
+    user.setOrganization(user.getOrganization());
+    user.setVerified(0);
+    int insert = userMapper.insert(user);
     
-  // }
+    Result result = new Result();
+    if ( insert!= 0) {
+      result.setCode(200);
+      result.setId(user.getId());
+    }
+    else {
+      result.setCode(400);
+    }
+    return result;
+  }
 }

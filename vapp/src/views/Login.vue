@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-13 18:15:22
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 20:57:07
+ * @LastEditTime: 2020-03-21 02:40:20
  * @FilePath: /decentralized-voting/vapp/src/views/Login.vue
  * @Description: 用户登录页面
  -->
@@ -49,18 +49,19 @@ export default {
   methods:{
     //登录逻辑
     login(){
-      var sha256 = require('js-sha256').sha256;
-      this.loginInfo.password = sha256(this.loginInfo.password) 
       if( !this.loginInfo.account || !this.loginInfo.password ) {
       this.$notify.error({
           title: '错误',
           message: '帐号密码不能为空'
         });
+        this.loginInfo.password = '';
       } else {
         this.toLogin();
       }
     },
     toLogin(){
+      var sha256 = require('js-sha256').sha256;
+      this.loginInfo.password = sha256(this.loginInfo.password) 
       this.isLoging = true;
       this.$store
       .dispatch("Login", this.loginInfo)

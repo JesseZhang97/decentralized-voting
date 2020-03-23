@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 01:55:53
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 02:42:20
+ * @LastEditTime: 2020-03-21 00:04:50
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/entity/User.java
  * @Description: 
  */
@@ -35,61 +35,14 @@ public class User {
     //姓名
     @TableField("name")
     private String name;
+    //公钥
+    @TableField("publickey")
+    private String publickey;
     //所属组织
     @TableField("organization")
     private String organization;
-
-
-
-    public User() {
-    }
-
-    public User(int id, String account, String password, String name, String organization) {
-        this.id = id;
-        this.account = account;
-        this.password = password;
-        this.name = name;
-        this.organization = organization;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAccount() {
-        return this.account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getOrganization() {
-        return this.organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
+    //认证状态
+    @TableField("verified")
+    private int verified;
 
 }

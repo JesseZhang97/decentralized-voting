@@ -1,16 +1,9 @@
 <!--
  * @Date: 2020-03-13 18:48:53
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-17 19:15:30
+ * @LastEditTime: 2020-03-21 03:20:26
  * @FilePath: /decentralized-voting/vapp/src/views/Register.vue
  * @Description: 注册帐号页面
- -->
-<!--
- * @Date: 2020-03-13 18:15:22
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-13 18:46:43
- * @FilePath: /decentralized-voting/vapp/src/views/Login.vue
- * @Description: 用户登录页面
  -->
 <template>
 <div class="login" id="login">
@@ -77,7 +70,6 @@ export default {
       }
   },
 
-    //登录请求
     toLogin(){
     var sha256 = require('js-sha256').sha256;
     this.userInfo.password = sha256(this.userInfo.password)
@@ -90,12 +82,12 @@ export default {
       if (code == 200) {
         this.$notify({
           title: '注册',
-          message: '帐号已成功注册,即将转入登录页面',
+          message: '帐号已成功注册,即将转入信息确认页面',
           type: 'success'
         });
         this.$router.push({ 
-          path: '/login',
-          query: { data: response.data.data }
+          path: '/infopage',
+          query: { data: response.data.id}
           //query: { data: response.data.data }
         });
         this.isLoging = false;

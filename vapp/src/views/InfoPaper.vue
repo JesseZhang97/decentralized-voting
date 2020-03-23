@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-19 02:36:25
  * @LastEditors: zhen
- * @LastEditTime: 2020-03-19 23:16:16
+ * @LastEditTime: 2020-03-23 23:06:22
  * @FilePath: /decentralized-voting/vapp/src/views/InfoPaper.vue
  * @Description: 
 -->
@@ -24,7 +24,7 @@
     <el-card class="box-card">
       <el-row>
         <el-col :span="6"><el-image :src="img" scale-down class="image"></el-image></el-col>
-        <el-col :span="11">
+        <el-col :span="16">
             <el-form ref="form" :model="form" label-width="60px" size="medium ">
             <el-form-item label="助记词">
               <el-input v-model="form.mnemonic "></el-input>
@@ -51,24 +51,47 @@
 </template>
 
 <script>
-import imgURL from '../assets/ethereum_logo.png'
 export default {
   name: 'InfoPaper',
   data() {
     return {
-      img: imgURL,
+      img: '',
       secretVisible : false,
       form : {
-        mnemonic: '',
-        prikey: '',
-        pubkey: ''
+        mnemonic:'',
+        prikey:'',
+        pubkey:'',
       }
     }
   },
+  created () {
+    this.fetchData()
+  },
   methods:{
+    fetchData () {
+    this.$axios({
+      method: 'get',
+      url:"http://localhost:8085/api/wallet",
+      params: {
+        id : this.$route.query.data
+      }
+    })
+    .then(response => {
+      this.form.mnemonic = response.data.mnemonic;
+      this.form.prikey = response.data.privatekey;
+      this.form.pubkey = response.data.publickey;
+      this.img = response.data.qrcode;
+      // console.log(response.data.mnemonic)
+      // console.log(response.data.privatekey)
+      // console.log(response.data.publickey)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    },
     confirm () {
       this.secretVisible = true
-    }
+    },
   }
 }
 </script>
