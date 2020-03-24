@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-20 02:00:39
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-23 23:02:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-03-24 20:10:54
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/service/impl/WalletServiceImpl.java
  * @Description: eth钱包功能实现
  */
@@ -29,7 +29,6 @@ import com.zz.backend.mapper.UserMapper;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.beykery.eth.WillWallet;
-import org.bouncycastle.util.encoders.Base64Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -43,10 +42,10 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
   @Autowired
   private UserMapper userMapper;
 
-  public Wallet genWallet (String userID) throws CipherException, IOException {
-    //生成钱包信息
+  public Wallet genWallet(String userID) throws CipherException, IOException {
+    // 生成钱包信息
     WillWallet wa = WillWallet.createWithMnemonic(null, "m/44'/60'/0'/0/0");
-    //存入bean object
+    // 存入bean object
     Wallet wl = new Wallet();
     User user = new User();
 
@@ -60,7 +59,6 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
     // System.out.println(user);
     // System.out.println(wl);
     int update = userMapper.updateById(user);
-    
 
     return wl;
   }
@@ -87,7 +85,7 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
          * 原生转码前面没有 data:image/png;base64 这些字段，返回给前端是无法被解析，可以让前端加，也可以在下面加上
          */
         resultImage = new String("data:image/png;base64," + Base64.encodeBase64String(os.toByteArray()));
-      return resultImage;
+        return resultImage;
       } catch (Exception e) {
         e.printStackTrace();
       } finally {
@@ -98,5 +96,6 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
       }
     }
     return null;
-}
+  }
+
 }
