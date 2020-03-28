@@ -1,42 +1,47 @@
 /*
  * @Date: 2020-03-15 03:27:40
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-19 03:22:37
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-03-26 00:49:39
  * @FilePath: /decentralized-voting/vapp/src/router/index.js
- * @Description: 
+ * @Description:
  */
-import Vue from 'vue' //引入 Vue
-import VueRouter from 'vue-router' //引入 Vue 路由
+import Vue from "vue"; //引入 Vue
+import VueRouter from "vue-router"; //引入 Vue 路由
 
 Vue.use(VueRouter); //安装插件
 
 export const constantRouterMap = [
-    //配置默认的路径，默认显示登录页
-    {   path: '/',
-        redirect: '/login'
-    },
+  //配置默认的路径，默认显示登录页
+  { path: "/", redirect: "/login" },
 
-    {
-        path: '/login',
-        component: () => import('@/views/Login')
-    },
+  {
+    path: "/login",
+    component: () => import("@/views/Login")
+  },
 
-    { path: '/register', component: () => import('@/views/Register')},
+  { path: "/register", component: () => import("@/views/Register") },
 
-    { 
-        path: '/home', component: () => import('@/views/Home'), 
-        meta: {
-            requireAuth: true
-        }
-    },
-
-    {
-        path: '/infopage', component: () => import('@/views/InfoPaper'),
+  {
+    path: "/home",
+    component: () => import("@/views/Home"),
+    meta: {
+      requireAuth: true
     }
-]
+  },
+
+  {
+    path: "/infopage",
+    component: () => import("@/views/InfoPaper")
+  },
+
+  {
+    path: "/home/createvote",
+    component: () => import("@/views/CreateVote")
+  }
+];
 
 export default new VueRouter({
-    mode: 'history', //后端支持可开
-    scrollBehavior: () => ({ y: 0 }),
-    routes: constantRouterMap //指定路由列表
-})
+  mode: "history", //后端支持可开
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap //指定路由列表
+});

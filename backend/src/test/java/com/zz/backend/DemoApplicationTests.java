@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-14 03:10:38
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-23 20:38:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-03-28 04:18:41
  * @FilePath: /decentralized-voting/backend/src/test/java/com/zz/backend/DemoApplicationTests.java
  * @Description: 
  */
@@ -35,18 +35,17 @@ public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() throws SQLException, CipherException {
-		
-		// User user = new User();
-    // user.setId(1);
-    // user.setPublickey("0x863197E5F3807bc75742CB2397Aa8158A91203b2");
-    // int update = userMapper.updateById(user);
 
-		//钱包测试代码
+		// User user = new User();
+		// user.setId(1);
+		// user.setPublickey("0x863197E5F3807bc75742CB2397Aa8158A91203b2");
+		// int update = userMapper.updateById(user);
+
+		// 钱包测试代码
 		// WillWallet wa = WillWallet.createWithMnemonic(null, "m/44'/60'/0'/0/0");
 		// String mnemonic = wa.getMnemonic();
 		// String pk = wa.getPrivateKey();
 		// String addr = wa.getAddress();
-		
 
 		// System.out.println("助记词：");
 		// System.out.println(mnemonic);
@@ -54,12 +53,11 @@ public class DemoApplicationTests {
 		// System.out.println(pk);
 		// System.out.println("地址：");
 		// System.out.println(addr);
-	
 
-		//注册用户代码
+		// 注册用户代码
 		User user = new User();
 
-		//Wallet wl = walletService.genWallet();
+		// Wallet wl = walletService.genWallet();
 
 		// System.out.println(wl.getMnemonic());
 		// System.out.println(wl.getPrivatekey());
@@ -73,29 +71,29 @@ public class DemoApplicationTests {
 		int insert = userMapper.insert(user);
 		System.out.println(insert);
 
-		//登录测试代码
+		// 登录测试代码
 		// System.out.println(datasource.getConnection());
 		// QueryWrapper<User> wrapper = new QueryWrapper<User>();
 		// wrapper.eq("account", "admin");
 		// wrapper.eq("password", "123");
-    // // User usercondition = new User();
-    // // usercondition.setAccount(user.getAccount());
+		// // User usercondition = new User();
+		// // usercondition.setAccount(user.getAccount());
 		// // usercondition.setPassword(user.getPassword());
 		// User user = userMapper.selectOne(wrapper);
 		// System.out.println(user);
-    
 
 		// List<User> userlist = userMapper.selectList(null);
-		// 	for (User user : userlist) {
-		// 		System.out.println(user);
-		// 	}
-	
+		// for (User user : userlist) {
+		// System.out.println(user);
+		// }
+
 	}
+
 	@Autowired
 	WalletServiceImpl walletService;
 
 	@Test
-	public void test_paper () throws SQLException,CipherException {
+	public void test_paper() throws SQLException, CipherException {
 		User user = new User();
 
 		// Wallet wl = walletService.genWallet();
@@ -106,7 +104,7 @@ public class DemoApplicationTests {
 		// user.setPublickey(wl.getPublickey());
 		// user.setOrganization("16022");
 		// user.setVerified(0);
-		
+
 		int insert = userMapper.insert(user);
 
 		System.out.println(user.getId());
@@ -114,21 +112,22 @@ public class DemoApplicationTests {
 	}
 
 	@Test
-	public void test_update () throws CipherException {
+	public void test_update() throws CipherException {
 		User user = new User();
-		
+
 		WillWallet wa = WillWallet.createWithMnemonic(null, "m/44'/60'/0'/0/0");
-         String mnemonic = wa.getMnemonic();
-         String pk = wa.getPrivateKey();
-         String addr = wa.getAddress();
+		String mnemonic = wa.getMnemonic();
+		String pk = wa.getPrivateKey();
+		String addr = wa.getAddress();
 
-    user.setId(23);
-    user.setPublickey(addr);
+		user.setId(23);
+		user.setPublickey(addr);
 		int update = userMapper.updateById(user);
-		
-
 		// user.setPublickey(wl.getPublickey());
-
 	}
 
+	@Test
+	public void contract() {
+
+	}
 }

@@ -1,7 +1,7 @@
 <!--
- * @Date: 2020-03-25 21:39:50
+ * @Date: 2020-03-26 00:47:08
  * @Author: zhen
- * @LastEditTime: 2020-03-26 00:46:07
+ * @LastEditTime: 2020-03-26 01:22:02
  * @Description: 
  -->
 <template>
@@ -10,7 +10,7 @@
     <el-container>
       <el-aside width="250px">
         <el-menu
-          default-active="1"
+          default-active="3-1"
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
@@ -69,14 +69,76 @@
         </el-menu>
       </el-aside>
       <!-- main界面 -->
-      <el-main></el-main>
+      <el-main>
+        <el-row>
+          <el-col :span="18">
+            <el-card>
+              <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="投票名称">
+                  <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动区域">
+                  <el-select v-model="form.region" placeholder="请选择活动区域">
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="活动时间">
+                  <el-col :span="8">
+                    <el-date-picker
+                      type="date"
+                      placeholder="选择日期"
+                      v-model="form.date1"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-col>
+                  <el-col class="line" :span="1">——</el-col>
+                  <el-col :span="11">
+                    <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                  </el-col>
+                </el-form-item>
+                <el-form-item label="活动形式">
+                  <el-input type="textarea" v-model="form.desc"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                </el-form-item>
+              </el-form>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
+
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      }
+    };
+  },
+  methods: {
+    onSubmit() {
+      console.log("submit!");
+    }
+  }
+};
 </script>
+
+
+
 
 <style>
 .el-header,
@@ -95,8 +157,6 @@ export default {};
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
-  line-height: 160px;
 }
 
 body > .el-container {
@@ -110,6 +170,9 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+.el-card {
+  margin-bottom: 200px;
 }
 
 html,
