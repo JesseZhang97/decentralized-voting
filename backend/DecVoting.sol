@@ -53,7 +53,7 @@ contract DecVoting {
     mapping(address => bool) public isVoted;
     //FIXME datatype zero
     bytes32[] hashedVotes;
-    mapping(bytes32 => uint256) public electionResults;
+    mapping(bytes32 => uint256) public electionResults; 
     /****************************************
                 END VOTE DATA
     /****************************************/
@@ -117,9 +117,9 @@ contract DecVoting {
                 }
             }
         }
-
+    
     function endRegistrationPhase() public inState(State.REGISTRATION) returns (bool) {
-        //FIXME 两种情况结束注册阶段 1、全部投票人注册状态为true 遍历mapping 如果全为true则  2、到达注册结束时间
+        //TODO 两种情况结束注册阶段 1、全部投票人注册状态为true 便利mapping 如果全为true则  2、到达注册结束时间
         if (block.timestamp < registrationEndTime) {
             return false;
         }
@@ -127,20 +127,20 @@ contract DecVoting {
         return true;
     }
     /**
-    TODO 选票数据RSA加密啊,投票地址匿名（交易地址不是真实的投票地址）
+    TODO 选票数据明文存储,投票地址匿名
      */
-    function castVote (bytes32 _hashedVotes, address _voterAddress) public inState(State.VOTING) returns (uint) {
+    function castVote (bytes32 _hashedVotes, address voterAddress) public inState(State.VOTING) returns (uint) {
         //未注册不能参与投票
-        if (!registeredVoters[_voterAddress]) {
+        if (!registeredVoters[voterAddress]) {
             return 1;
         }
         //已经投票过,不能再次投票
-        if (isVoted[_voterAddress]) {
+        if (isVoted[voterAddress]) {
             return 2;
         }
         //成功给出选票
         hashedVotes.push(_hashedVotes);
-        isVoted[_voterAddress] = true;
+        isVoted[voterAddress] = true;
         return 3;
     }
 
@@ -152,7 +152,7 @@ contract DecVoting {
 
 
     function beginTallyPhase() public inState(State.READY_TO_TALLY) returns (bool) {
-        //FIXME 计票
+        //TODO 计票
 
         state = State.END_TALLY;
     }

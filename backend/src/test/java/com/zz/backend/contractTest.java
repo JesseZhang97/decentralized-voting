@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-03-30 01:11:59
+ * @LastEditTime: 2020-04-03 23:56:22
  * 
  * @Description:
  */
@@ -13,10 +13,13 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import com.kenai.jffi.Array;
 import com.zz.backend.contract.DecVoting;
-import com.zz.backend.contract.ExampleContract;
-
+import com.zz.backend.util.UnixTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.web3j.protocol.Web3j;
@@ -25,70 +28,67 @@ import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.Uint;
 import org.web3j.abi.datatypes.generated.Uint160;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 
 @SpringBootTest
 public class contractTest {
-
   @Test
-  public void serviceTest() throws Exception {
+  public void setupDataTest() throws Exception {
     // 创建实例 部署合约
-    final String PRIVATE_KEY = "0x24ba380aa0d6aaed30dbb058bdc6e96ab19d9f00d72267a9758080be7a073d91";
-    final BigInteger GAS_LIMIT = BigInteger.valueOf(6721975L);
-    final BigInteger GAS_PRICE = BigInteger.valueOf(20000000000L); // L being long; capital for clarity
-    // get shi li
-    Web3j web3j = Web3j.build(new HttpService());
-    Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
-    // web3ClientVersion
-    String web3ClientVersionString = web3ClientVersion.getWeb3ClientVersion();
-    System.out.println();
-    System.out.println("Web3 client version: " + web3ClientVersionString);
-    System.out.println();
-
-    // get credentials
+    final String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
+    final BigInteger GAS_LIMIT = BigInteger.valueOf(6700000);
+    final BigInteger GAS_PRICE = BigInteger.valueOf(22_000_000_000L); // L being long; capital for clarity
+    Web3j web3j = Web3j.build(new HttpService("https://kovan.infura.io/v3/76b5ad0a18394767b129a2a60a7793c6"));
     Credentials credentials = Credentials.create(PRIVATE_KEY);
     System.out.println("Credential KeyPair : " + credentials.getEcKeyPair());
-    // deploy contract
-    String deployedContract = ExampleContract.deploy(web3j, credentials, GAS_PRICE, GAS_LIMIT).send()
-        .getContractAddress();
-    System.out.println("Deployed contract address; " + deployedContract);
-    // FIXME filter
-    EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST,
-        deployedContract);
-    web3j.ethLogFlowable(filter).subscribe(log -> System.out.println(log.toString()));
+    // Web3ClientVersion web3ClientVersion = web3j.web3ClientVersion().send();
+    // String clientVersion = web3ClientVersion.getWeb3ClientVersion();
+    // System.out.println(clientVersion);
+
+    // // deploy contract
+    // String deployedContract = DecVoting.deploy(web3j, credentials, GAS_PRICE,
+    // GAS_LIMIT).send().getContractAddress();
+    // System.out.println("Deployed contract address:" + deployedContract);
+
     // get instance
-    ExampleContract exampleContract = ExampleContract.load(deployedContract, web3j, credentials, GAS_PRICE, GAS_LIMIT);
-    // operation
-    exampleContract.setBalance("Alice", BigInteger.valueOf(4)).send();
-    System.out.println("----------------------------------------");
-    Object ans = exampleContract.returnBalance("Alice").send();
-    System.out.println("user-defined message:   " + ans.toString());
-    ans = exampleContract.returnBalance("Bob").send();
-    System.out.println("user-defined message:   " + ans.toString());
-    System.out.println();
+    DecVoting voting = DecVoting.load("0xFbd4Ca99A4010870b69604Ffe12Ed8cF0B53F96A", web3j, credentials, GAS_PRICE,
+        GAS_LIMIT);
+    // // 发起投票
+    String _voteName = "张祯厉害";
+    BigInteger _registrationStartTime = new BigInteger("1585972560");
+    BigInteger _registrationEndTime = new BigInteger("1585972620");
+    BigInteger _votingStartTime = new BigInteger("1585972680");
+    BigInteger _votingEndTime = new BigInteger("1585972740");
+
+    List<String> _voterAddr = new ArrayList<>();
+    _voterAddr.add("0x840e5d7B953DBDE80C10851904170Fe391eB6323");
+    _voterAddr.add("0x5Af8713c57818216d4f69Fc60153Fa91E036b4D9");
+    _voterAddr.add("0x850757399DEb8D3838C74B62935139a51f3A29d2");
+    List<String> _candidates = new ArrayList<>();
+    _candidates.add("张三");
+    _candidates.add("李四");
+    _candidates.add("hape");
+
+    voting.finishSetUp(_voteName, _registrationStartTime, _registrationEndTime, _votingStartTime, _votingEndTime,
+        _voterAddr, _candidates);
+
+    // 开始注册
+    // voting.registerVoter("0x840e5d7B953DBDE80C10851904170Fe391eB6323");
+    // 结束注册
+
+    // 给出选票
+    // 结束投票
+    // 计票
+
   }
 
   @Test
-  public void setupDataTest() throws Exception
-  {
-    // 创建实例 部署合约
-    final String PRIVATE_KEY = "0x67e25a90fdeb2377d2e3440efc1c150c3d8ae3f7b7dc05e0381195e8d493b2b9";
-    final BigInteger GAS_LIMIT = BigInteger.valueOf(6721975L);
-    final BigInteger GAS_PRICE = BigInteger.valueOf(20000000000L); // L being long; capital for clarity
-    Web3j web3j = Web3j.build(new HttpService());
-    Credentials credentials = Credentials.create(PRIVATE_KEY);
-    System.out.println("Credential KeyPair : " + credentials.getEcKeyPair());
-    // deploy contract
-    String deployedContract = DecVoting.deploy(web3j, credentials, GAS_PRICE, GAS_LIMIT).send()
-        .getContractAddress();
-    System.out.println("Deployed contract address; " + deployedContract);
-    // get instance
-    DecVoting voting = DecVoting.load(deployedContract, web3j, credentials, GAS_PRICE, GAS_LIMIT);
-    // operation
-    List<Address> _voterAddress = new ArrayList<>();
-    _voterAddress.add(new Uint160(0x56d10818a88eec711bbda20f07703c613aa10dc14ff9a3152252059d5e93e54c,0x45abde53202c43b4c9ab576b1d4b35a47fd532f054f17c7172112dcf96287983,0x672700d8c366b8cfa9c6c5b25fc26dffa1fb9f7db7a4a93f7315a711201e7f1f));    
-    voting.finishSetUp("_voteName", 2020-03-30, 2020-03-31, 
-  2020-03-32, 2020-03-33, 5, 5, _voterAddress, _candidates)
+  public void unixTime() throws ParseException {
+    DateFormat df = new SimpleDateFormat("yyyy-MM-DD HH:mm");
+    long epoch = df.parse("2015-09-09 0:0").getTime() / 1000L;
+    System.out.println(epoch);
   }
 }
