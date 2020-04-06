@@ -4,6 +4,8 @@ pragma experimental ABIEncoderV2;
 contract DecVoting {
     enum State {SETUP, REGISTRATION, VOTING, READY_TO_TALLY, END_TALLY}
     State public state;
+    bool public returnbool = false;
+    uint public voteSC = 111;
 
     modifier inState(State s) {
         if (state != s) {
@@ -15,20 +17,13 @@ contract DecVoting {
     /****************************************
                 SETUP DATA
     /****************************************/
-    //投票参数
     string public voteName;//投票标题
     uint256 public registrationStartTime; //注册开始时间
     uint256 public registrationEndTime; //注册结束时间
     uint256 public votingStartTime; //投票开始时间
     uint256 public votingEndTime; //投票结束时间
-    //投票人参数
-        address[] public voterAddress; //投票人地址列表
-    //uint160[] public voterAddress; //投票人地址列表
-    //uint256 public numberOfVoters; //TODO投票人数 前端限制人数
-    //候选人参数
+    address[] public voterAddress; //投票人地址列表
     string[] public candidates; //候选人list
-    mapping(string => bool) public candidatesMap;
-    //TODO 是否对所有人公开 bool public ifPublic;
     /****************************************
                 END SETUP DATA
     /****************************************/
@@ -50,14 +45,12 @@ contract DecVoting {
     /****************************************
                 VOTE DATA
     /****************************************/
+    string[] votes;
     mapping(address => bool) public isVoted;
-    //FIXME datatype zero
-    bytes32[] hashedVotes;
-    mapping(bytes32 => uint256) public electionResults;
+    mapping(string => uint256) public electionResults;
     /****************************************
                 END VOTE DATA
     /****************************************/
-    //mapping(string => uint256) public electionResults;
 
     constructor() public {
         state = State.SETUP;
@@ -71,80 +64,49 @@ contract DecVoting {
         uint256 _votingEndTime,
         address[] memory _voterAddress,
         string[] memory _candidates
-    ) public inState(State.SETUP) returns (bool) {
-        //参数限制
-        if (_registrationStartTime < block.timestamp) {
-            return false;
-        }
-
-        if (_registrationStartTime > _registrationEndTime) {
-            return false;
-        }
-
-        if (_registrationEndTime > _votingStartTime ||
-            _votingStartTime > _votingEndTime) {
-            return false;
-        }
-
+    ) public inState(State.SETUP) {
         voteName = _voteName;
         registrationStartTime = _registrationStartTime;
         registrationEndTime = _registrationEndTime;
         votingStartTime = _votingStartTime;
         votingEndTime = _votingEndTime;
-       // numberOfVoters = _numberOfVoters;
-        //numberOfCandidates = _numberOfCandidates;
         voterAddress = _voterAddress;
         candidates = _candidates;
 
         state = State.REGISTRATION;
-        return true;
+        returnbool = true;
     }
 
-    //TODO 后端进行过滤,只允许传入符合投票名单的地址
-    function registerVoter(address publickey) public inState(State.REGISTRATION)
-        returns (bool) {
-            if (block.timestamp < registrationStartTime) {
-                return false;
+    function registerVoter(address publickey) public inState(State.REGISTRATION) {
+        if(registeredVoters[publickey]) {
+                returnbool = false;
             }
-            //TODO sha3(publickey)
-            else {
-                if(registeredVoters[publickey]) {
-                    return false;
-                }
-                else {
-                    registeredVoters[publickey] = true;
-                    return true;
-                }
-            }
-        }
+        registeredVoters[publickey] = true;
+        returnbool = true;
+    }
 
     function endRegistrationPhase() public inState(State.REGISTRATION) returns (bool) {
-        //FIXME 两种情况结束注册阶段 1、全部投票人注册状态为true 遍历mapping 如果全为true则  2、到达注册结束时间
-        if (block.timestamp < registrationEndTime) {
-            return false;
-        }
         state = State.VOTING;
-        return true;
-    }
-    /**
-    TODO 选票数据RSA加密啊,投票地址匿名（交易地址不是真实的投票地址）
-     */
-    function castVote (bytes32 _hashedVotes, address _voterAddress) public inState(State.VOTING) returns (uint) {
-        //未注册不能参与投票
-        if (!registeredVoters[_voterAddress]) {
-            return 1;
-        }
-        //已经投票过,不能再次投票
-        if (isVoted[_voterAddress]) {
-            return 2;
-        }
-        //成功给出选票
-        hashedVotes.push(_hashedVotes);
-        isVoted[_voterAddress] = true;
-        return 3;
+        returnbool = true;
     }
 
-    //后端计时器到时间后调用此方法改变投票状态
+    function castVote (string memory _hashedVotes) public inState(State.VOTING) {
+        //未注册不能参与投票
+        if (!registeredVoters[msg.sender]) {
+            voteSC = 1;
+            returnbool = false;
+        }
+        //已经投票过,不能再次投票
+        if (isVoted[msg.sender]) {
+            voteSC = 2;
+            returnbool = false;
+        }
+        //成功给出选票
+        votes.push(_hashedVotes);
+        isVoted[msg.sender] = true;
+        returnbool = true;
+    }
+
     function endVotingPhase() public inState(State.VOTING) returns (bool) {
         state = State.READY_TO_TALLY;
         return true;
@@ -152,8 +114,18 @@ contract DecVoting {
 
 
     function beginTallyPhase() public inState(State.READY_TO_TALLY) returns (bool) {
-        //FIXME 计票
-
+        for( uint i = 0; i < candidates.length; i++ ) {
+            electionResults[candidates[i]] = 0;
+        }
+        for( uint j = 0; j < votes.length; j++) {
+            electionResults[votes[j]] += 1;
+        }
         state = State.END_TALLY;
+    }
+    function numOfVoters() public view returns (uint){
+        return voterAddress.length;
+    }
+    function numOfCandidates() public view returns (uint) {
+        return candidates.length;
     }
 }

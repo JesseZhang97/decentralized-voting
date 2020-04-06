@@ -1,10 +1,10 @@
 /*
  * @Date: 2020-04-01 18:39:42
  * @Author: zhen
- * @LastEditTime: 2020-04-01 18:39:43
+ * @LastEditTime: 2020-04-06 04:10:51
  * @Description: 
  */
-package com.zz.backend.contract;
+package com.zz.backend.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigInteger;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor // FIXME
+@NoArgsConstructor // FIXME
 public class Tranction {
 
     // 发送方地址

@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-03 21:13:43
+ * @LastEditTime: 2020-04-06 04:33:05
  * 
  * @Description:
  */
@@ -28,5 +28,4 @@ public class voteData {
   private List<String> voterAddr;
   private List<String> candidates;
   private String callerPRIVATEKEY;
-  // private vote
 }
