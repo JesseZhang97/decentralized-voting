@@ -3,29 +3,37 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-06 05:14:04
+ * @LastEditTime: 2020-04-09 01:09:23
  * 
  * @Description:用户设定投票内容
  */
 package com.zz.backend.service.impl;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zz.backend.contract.DecVoting;
-import com.zz.backend.entity.voteData;
+import com.zz.backend.entity.Mail;
+import com.zz.backend.entity.User;
+import com.zz.backend.entity.VoteData;
+import com.zz.backend.mapper.UserMapper;
 import com.zz.backend.util.EthUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 /**
  * @description:处理前端传入的投票信息
  */
-public class SetupVotingServiceImpl {
-  public String getVoteData(voteData vd) throws Exception {
+@Service
+public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
+  public String getVoteData(VoteData vd) throws Exception {
     String ERROR_msg = "ERROR";
     // get caller ADDRESS and DEPLOY
+    EthUtil.connectEthereum();
     String contractAddress = EthUtil.deployContract(vd.getCallerPRIVATEKEY());
     // load contract
     DecVoting voting = EthUtil.loadContract(vd.getCallerPRIVATEKEY(), contractAddress);
@@ -36,14 +44,49 @@ public class SetupVotingServiceImpl {
     BigInteger _votingEndTime = vd.getVotingEndTime();
     List<String> _voterAddr = vd.getVoterAddr();
     List<String> _candidates = vd.getCandidates();
-    String txHash = voting.finishSetUp(_voteName, _registrationStartTime, _registrationEndTime, _votingStartTime,
-        _votingEndTime, _voterAddr, _candidates).send().getTransactionHash();
-    // for(int i=0; i < voting.numOfVoters().,)
-    // voting.voterAddress(param0)
-
-    if (!voting.returnbool().send().booleanValue()) {
+    voting.finishSetUp(_voteName, _registrationStartTime, _registrationEndTime, _votingStartTime, _votingEndTime,
+        _voterAddr, _candidates).send();
+    if (voting.returnbool().send().booleanValue() == false) {
       return ERROR_msg;
     }
-    return txHash;
+    List<String> voterList = new ArrayList<>();
+    int numOfVoter = voting.numOfVoters().send().intValue();
+    for (int i = 0; i < numOfVoter; i++) {
+      BigInteger newI = BigInteger.valueOf(i);
+      voterList.add(voting.voterAddress(newI).send().toString());
+    }
+    getVoterList(voterList, _voteName);
+    EthUtil.closeEthereum();
+    return contractAddress;
+  }
+
+  @Autowired
+  private UserMapper userMapper;
+
+  @Autowired
+  EmailServiceImpl emailService;
+
+  public boolean getVoterList(List<String> voterList, String _votename) {
+    // 找到voterList地址对应的数据库邮件地址
+    User user = new User();
+    String mailList = "";
+    // QueryWrapper<User> wrapper = new QueryWrapper<User>();
+    for (int i = 0; i < voterList.size(); i++) {
+      user.setPublickey(voterList.get(i));
+      // TODO 空指针问题
+      QueryWrapper<User> wrapper = new QueryWrapper<User>();
+      wrapper.eq("publickey", user.getPublickey());
+      // userMapper.selectOne(wrapper).getEmail();
+      mailList += userMapper.selectOne(wrapper).getEmail() + ",";
+    }
+    mailList = mailList.substring(0, mailList.length() - 1);
+    // 发送邮件
+    Mail ml = new Mail();
+    ml.setFrom("597375428@qq.com");
+    ml.setTo(mailList);
+    ml.setSubject("注册投票");
+    ml.setText("你好,\n你有一个新的可参与投票,投票活动名为：" + _votename + "\n投票地址为：" + "TODO");
+    return emailService.emailSender(ml);
+    // TODO启动计时器,到时间发送邮件
   }
 }

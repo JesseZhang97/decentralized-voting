@@ -1,12 +1,12 @@
 /*
  * @Date: 2020-04-04 05:02:55
  * @Author: zhen
- * @LastEditTime: 2020-04-06 04:26:00
+ * @LastEditTime: 2020-04-08 00:34:46
  * @Description: 
  */
 package com.zz.backend.controller;
 
-import com.zz.backend.entity.voteData;
+import com.zz.backend.entity.VoteData;
 import com.zz.backend.service.impl.SetupVotingServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,9 @@ public class SetupVoteController {
   @CrossOrigin
   @PostMapping(value = "/api/setup")
   @ResponseBody
-  public String setupVote(@RequestBody voteData requestVoteData) throws Exception {
+  public String setupVote(@RequestBody VoteData requestVoteData) throws Exception {
     if (requestVoteData == null) {
-      return null;
+      return "-1";
     }
     return setUpService.getVoteData(requestVoteData);
   }

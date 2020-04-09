@@ -1,11 +1,8 @@
 /*
- * @Date: 2020-04-01 23:12:35
- * 
+ * @Date: 2020-04-06 19:20:32
  * @Author: zhen
- * 
- * @LastEditTime: 2020-04-06 04:33:05
- * 
- * @Description:
+ * @LastEditTime: 2020-04-06 19:21:34
+ * @Description: 
  */
 package com.zz.backend.entity;
 
@@ -19,7 +16,8 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class voteData {
+
+public class VoteData {
   private String voteName;
   private BigInteger registrationStartTime;
   private BigInteger registrationEndTime;

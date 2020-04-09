@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-05 19:15:50
+ * @LastEditTime: 2020-04-08 17:59:00
  * 
  * @Description:ethereum 操作工具类
  */
@@ -27,10 +27,16 @@ public class EthUtil {
   // HttpService("https://kovan.infura.io/v3/76b5ad0a18394767b129a2a60a7793c6"));
   // static BigInteger GAS_LIMIT = BigInteger.valueOf(6721975L);
   // static BigInteger GAS_PRICE = BigInteger.valueOf(20000000000L);
-  static String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
+  // static String PRIVATE_KEY =
+  // "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
   static WebSocketService ws = new WebSocketService("wss://kovan.infura.io/ws/v3/76b5ad0a18394767b129a2a60a7793c6",
       true);
   static String CREDENTIALS_ERROR = "SOMETHING WENT WRONG IN GETTING CREDENTIALS";
+
+  public static Credentials credentials(String PRIVATE_KEY) throws Exception {
+    Credentials credentials = Credentials.create(PRIVATE_KEY);
+    return credentials;
+  }
 
   /**
    * 获得credentials并部署合约
@@ -40,17 +46,13 @@ public class EthUtil {
    * @throws Exception
    */
   public static String deployContract(String PRIVATE_KEY) throws Exception {
-    ws.connect();
+    Web3j web3j = Web3j.build(ws);
     Credentials credentials = Credentials.create(PRIVATE_KEY);// FIXME ??线上获取影响效率,存储为静态资源加载
     if (credentials == null) {
       return CREDENTIALS_ERROR;
     }
-    Web3j web3j = Web3j.build(ws);
-    // System.out.println("Credential KeyPair : " + credentials.getEcKeyPair());
     String deployedContract = DecVoting.deploy(web3j, credentials, new DefaultGasProvider()).send()
         .getContractAddress();
-    // System.out.println("Deployed contract address:" + deployedContract);
-    ws.close();
     return deployedContract;
   }
 
@@ -63,12 +65,28 @@ public class EthUtil {
    * @throws ConnectException
    */
   public static DecVoting loadContract(String PRIVATE_KEY, String deployedContract) throws ConnectException {
-    ws.connect();
     Web3j web3j = Web3j.build(ws);
     Credentials credentials = Credentials.create(PRIVATE_KEY);
     DecVoting voting = DecVoting.load(deployedContract, web3j, credentials, new DefaultGasProvider());
-    ws.close();
     return voting;
+  }
+
+  /**
+   * @description:
+   * @param {type}
+   * @return:
+   */
+  public static void connectEthereum() throws ConnectException {
+    ws.connect();
+  }
+
+  /**
+   * @description:
+   * @param {type}
+   * @return:
+   */
+  public static void closeEthereum() {
+    ws.close();
   }
 
   /**

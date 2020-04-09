@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-16 18:17:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-24 01:17:24
+ * @LastEditTime: 2020-04-07 20:12:22
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/service/impl/UserServiceImpl.java
  * @Description: 用户的登录与注册
  */
@@ -49,6 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> {
     user.setPassword(user.getPassword());
     user.setName(user.getName());
     user.setOrganization(user.getOrganization());
+    user.setEmail(user.getEmail());
     user.setVerified(0);
     int insert = userMapper.insert(user);
 

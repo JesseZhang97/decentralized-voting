@@ -58,8 +58,8 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
     user.setPublickey(wl.getPublickey());
     // System.out.println(user);
     // System.out.println(wl);
-    int update = userMapper.updateById(user);
-
+    // int update = userMapper.updateById(user);
+    userMapper.updateById(user);
     return wl;
   }
 

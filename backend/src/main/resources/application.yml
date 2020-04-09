@@ -16,3 +16,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/backendData?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 68686868
+  # 邮件服务
+  mail:
+    host: smtp.qq.com
+    username: 597375428
+    password: pukmxcdqatcibefj
+    properties:
+      from: 597375428@qq.com

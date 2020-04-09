@@ -1,13 +1,15 @@
 /*
  * @Date: 2020-03-14 03:10:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-28 04:18:41
+ * @LastEditTime: 2020-04-07 22:04:06
  * @FilePath: /decentralized-voting/backend/src/test/java/com/zz/backend/DemoApplicationTests.java
  * @Description: 
  */
 package com.zz.backend;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 //import java.util.List;
 
@@ -18,6 +20,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zz.backend.mapper.UserMapper;
 import com.zz.backend.entity.User;
 import com.zz.backend.entity.Wallet;
+import com.zz.backend.service.impl.SetupVotingServiceImpl;
 import com.zz.backend.service.impl.WalletServiceImpl;
 
 import org.beykery.eth.WillWallet;
@@ -67,6 +70,7 @@ public class DemoApplicationTests {
 		user.setPassword("12aaaaa345");
 		user.setName("张想");
 		user.setOrganization("16022");
+		user.setEmail("597375428@qq.com");
 		user.setVerified(0);
 		int insert = userMapper.insert(user);
 		System.out.println(insert);
