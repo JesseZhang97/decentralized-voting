@@ -3,7 +3,7 @@
  * 
  * @Author: zero
  * 
- * @LastEditTime: 2020-04-01 20:52:20
+ * @LastEditTime: 2020-04-10 18:28:10
  * 
  * @Description:
  */
@@ -27,6 +27,17 @@ public class UnixTime {
     }
     SimpleDateFormat sdf = new SimpleDateFormat(format);
     return sdf.format(new Date(Long.valueOf(seconds + "000")));
+  }
+
+  /**
+   * @description:
+   * @param {type}
+   * @return: BigInteger
+   */
+  public static BigInteger getNowTimeStamp() {
+    long time = System.currentTimeMillis();
+    BigInteger nowTimeStamp = BigInteger.valueOf(time);
+    return nowTimeStamp;
   }
 
 }

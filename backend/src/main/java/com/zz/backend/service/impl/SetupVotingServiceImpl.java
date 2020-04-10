@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-09 01:09:23
+ * @LastEditTime: 2020-04-10 19:02:37
  * 
  * @Description:用户设定投票内容
  */
@@ -21,6 +21,7 @@ import com.zz.backend.entity.User;
 import com.zz.backend.entity.VoteData;
 import com.zz.backend.mapper.UserMapper;
 import com.zz.backend.util.EthUtil;
+import com.zz.backend.util.UnixTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
   public String getVoteData(VoteData vd) throws Exception {
-    String ERROR_msg = "ERROR";
+    String ERROR_msg = "ETHEREUM TRANSITION ERROR";
+    String TIME_ERROR = "TIME ERROR";
     // get caller ADDRESS and DEPLOY
+
     EthUtil.connectEthereum();
     String contractAddress = EthUtil.deployContract(vd.getCallerPRIVATEKEY());
     // load contract
@@ -44,18 +47,32 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     BigInteger _votingEndTime = vd.getVotingEndTime();
     List<String> _voterAddr = vd.getVoterAddr();
     List<String> _candidates = vd.getCandidates();
+
+    if (_registrationStartTime.compareTo(UnixTime.getNowTimeStamp()) < 0) {
+      return TIME_ERROR;
+    }
+    if (_registrationStartTime.compareTo(_registrationEndTime) > 0) {
+      return TIME_ERROR;
+    }
+    if (_registrationEndTime.compareTo(_votingStartTime) > 0) {
+      return TIME_ERROR;
+    }
+    if (_votingStartTime.compareTo(_votingEndTime) > 0) {
+      return TIME_ERROR;
+    }
+
     voting.finishSetUp(_voteName, _registrationStartTime, _registrationEndTime, _votingStartTime, _votingEndTime,
         _voterAddr, _candidates).send();
-    if (voting.returnbool().send().booleanValue() == false) {
-      return ERROR_msg;
-    }
+    // if (voting.returnbool().send().booleanValue() == false) {
+    //   return ERROR_msg;
+    // }
     List<String> voterList = new ArrayList<>();
     int numOfVoter = voting.numOfVoters().send().intValue();
     for (int i = 0; i < numOfVoter; i++) {
       BigInteger newI = BigInteger.valueOf(i);
       voterList.add(voting.voterAddress(newI).send().toString());
     }
-    getVoterList(voterList, _voteName);
+    getVoterList(voterList, _voteName, contractAddress);
     EthUtil.closeEthereum();
     return contractAddress;
   }
@@ -66,11 +83,11 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
   @Autowired
   EmailServiceImpl emailService;
 
-  public boolean getVoterList(List<String> voterList, String _votename) {
+  public boolean getVoterList(List<String> voterList, String _votename, String contractAddress) {
     // 找到voterList地址对应的数据库邮件地址
     User user = new User();
     String mailList = "";
-    // QueryWrapper<User> wrapper = new QueryWrapper<User>();
+    // TODO QueryWrapper<User> wrapper = new QueryWrapper<User>();
     for (int i = 0; i < voterList.size(); i++) {
       user.setPublickey(voterList.get(i));
       // TODO 空指针问题

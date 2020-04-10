@@ -4,8 +4,7 @@ pragma experimental ABIEncoderV2;
 contract DecVoting {
     enum State {SETUP, REGISTRATION, VOTING, READY_TO_TALLY, END_TALLY}
     State public state;
-    bool public returnbool = false;
-    uint public voteSC = 111;
+    uint public voteSC = 999;
 
     modifier inState(State s) {
         if (state != s) {
@@ -64,7 +63,7 @@ contract DecVoting {
         uint256 _votingEndTime,
         address[] memory _voterAddress,
         string[] memory _candidates
-    ) public inState(State.SETUP) {
+    ) public inState(State.SETUP) returns (bool) {
         voteName = _voteName;
         registrationStartTime = _registrationStartTime;
         registrationEndTime = _registrationEndTime;
@@ -74,37 +73,37 @@ contract DecVoting {
         candidates = _candidates;
 
         state = State.REGISTRATION;
-        returnbool = true;
+        return true;
     }
 
-    function registerVoter(address publickey) public inState(State.REGISTRATION) {
+    function registerVoter(address publickey) public inState(State.REGISTRATION) returns (bool) {
         if(registeredVoters[publickey]) {
-                returnbool = false;
+                return false;
             }
         registeredVoters[publickey] = true;
-        returnbool = true;
+        return true;
     }
 
     function endRegistrationPhase() public inState(State.REGISTRATION) returns (bool) {
         state = State.VOTING;
-        returnbool = true;
+        return true;
     }
 
-    function castVote (string memory _hashedVotes) public inState(State.VOTING) {
+    function castVote (string memory _hashedVotes) public inState(State.VOTING) returns (bool) {
         //未注册不能参与投票
         if (!registeredVoters[msg.sender]) {
             voteSC = 1;
-            returnbool = false;
+            return false;
         }
         //已经投票过,不能再次投票
         if (isVoted[msg.sender]) {
             voteSC = 2;
-            returnbool = false;
+            return false;
         }
         //成功给出选票
         votes.push(_hashedVotes);
         isVoted[msg.sender] = true;
-        returnbool = true;
+        return true;
     }
 
     function endVotingPhase() public inState(State.VOTING) returns (bool) {

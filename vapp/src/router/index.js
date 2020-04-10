@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 03:27:40
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-26 00:49:39
+ * @LastEditTime: 2020-04-10 22:10:43
  * @FilePath: /decentralized-voting/vapp/src/router/index.js
  * @Description:
  */
@@ -37,6 +37,11 @@ export const constantRouterMap = [
   {
     path: "/home/createvote",
     component: () => import("@/views/CreateVote")
+  },
+
+  {
+    path: "/registervote",
+    component: () => import("@/views/RegisterVote")
   }
 ];
 

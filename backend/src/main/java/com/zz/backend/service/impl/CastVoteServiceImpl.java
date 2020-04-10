@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-08 21:45:01
+ * @LastEditTime: 2020-04-11 04:19:02
  * 
  * @Description: 
  * 
@@ -19,17 +19,32 @@ import com.zz.backend.contract.DecVoting;
 import com.zz.backend.entity.VoteData;
 import com.zz.backend.util.EthUtil;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CastVoteServiceImpl {
 
   // 给出选票
   public String castVote(String _contractAddress, String PRIVATE_KEY, String vote) throws Exception {
-    String ERROR_msg = "VOTE ERROR";
+    String ETHEREUM_ERROR = "ETHEREUM NETWORK ERROR";
+    String NOT_REGISTERED_ERROE = "USER NOT REGISTERED";
+    String ALREADY_VOTED_ERROR = "USER ALREADY VOTED";
     // Credentials credentials = EthUtil.credentials(PRIVATE_KEY);
     EthUtil.connectEthereum();
     DecVoting voting = EthUtil.loadContract(PRIVATE_KEY, _contractAddress);
     String txHash = voting.castVote(vote).send().getTransactionHash();
+    // FIXME 没有注册不能投票 已经投票过无法再次投票
     if (txHash == null) {
-      return ERROR_msg;
+      EthUtil.closeEthereum();
+      return ETHEREUM_ERROR;
+    } else if (voting.voteSC().send().intValue() == 1) {
+      // 没有注册不能投票
+      EthUtil.closeEthereum();
+      return NOT_REGISTERED_ERROE;
+    } else if (voting.voteSC().send().intValue() == 2) {
+      // 已经投票过无法再次投票
+      EthUtil.closeEthereum();
+      return ALREADY_VOTED_ERROR;
     } else {
       EthUtil.closeEthereum();
       return txHash;
@@ -52,7 +67,20 @@ public class CastVoteServiceImpl {
       candidatesList.add(voting.candidates(newI).send().toString());
     }
     vd.setCandidates(candidatesList);
-
     return vd;
+  }
+
+  // 结束投票阶段
+  public boolean endVoting(String _contractAddress, String PRIVATE_KEY) throws Exception {
+    // TODO 计时器,时间unix time,到时调用方法 OR 遍历循环mapper后如果全为true调用
+    EthUtil.connectEthereum();
+    DecVoting voting = EthUtil.loadContract(PRIVATE_KEY, _contractAddress);
+    voting.endVotingPhase().send();
+    if (voting.state().send().intValue() == 3) {
+      EthUtil.closeEthereum();
+      return true;
+    }
+    EthUtil.closeEthereum();
+    return false;
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-26 00:47:08
  * @Author: zhen
- * @LastEditTime: 2020-03-26 01:22:02
+ * @LastEditTime: 2020-04-10 21:20:42
  * @Description: 
  -->
 <template>
@@ -73,32 +73,51 @@
         <el-row>
           <el-col :span="18">
             <el-card>
-              <el-form ref="form" :model="form" label-width="80px">
+              <el-form ref="form" :model="form" label-width="80px" label-position="top">
                 <el-form-item label="投票名称">
                   <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="活动区域">
-                  <el-select v-model="form.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                  </el-select>
+                <el-form-item label="注册开始时间">
+                  <el-date-picker
+                    v-model="value1"
+                    type="datetimerange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  ></el-date-picker>
                 </el-form-item>
-                <el-form-item label="活动时间">
-                  <el-col :span="8">
-                    <el-date-picker
-                      type="date"
-                      placeholder="选择日期"
-                      v-model="form.date1"
-                      style="width: 100%;"
-                    ></el-date-picker>
-                  </el-col>
-                  <el-col class="line" :span="1">——</el-col>
-                  <el-col :span="11">
-                    <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                  </el-col>
+                <el-form-item label="注册结束时间">
+                  <el-date-picker
+                    v-model="value1"
+                    type="datetimerange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  ></el-date-picker>
                 </el-form-item>
-                <el-form-item label="活动形式">
-                  <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-form-item label="投票人名单">
+                  <el-row>
+                    <el-select v-model="value" placeholder="请选择">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-row>
+                  <el-row>
+                    <el-transfer v-model="value" :data="data"></el-transfer>
+                  </el-row>
+                </el-form-item>
+                <el-form-item label="候选人名单">
+                  <el-input placeholder="请输入候选人名称" v-model="input" clearable></el-input>
+                  <el-card class="box-card">
+                    <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
+                  </el-card>
+                </el-form-item>
+                <el-form-item>
+                  <el-input placeholder="请输入密钥" v-model="input" clearable show-password></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -141,6 +160,13 @@ export default {
 
 
 <style>
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
@@ -172,7 +198,7 @@ body > .el-container {
   line-height: 320px;
 }
 .el-card {
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 }
 
 html,

@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-08 00:19:19
+ * @LastEditTime: 2020-04-11 04:18:07
  * 
  * @Description:
  */
@@ -38,6 +38,21 @@ import org.web3j.crypto.Credentials;
 
 @SpringBootTest
 public class contractTest {
+  @Test
+  public void unixTimeTest() throws Exception {
+    long time = System.currentTimeMillis();
+    String nowTimeStamp = String.valueOf(time / 1000);
+    System.out.println(nowTimeStamp);
+  }
+
+  @Test
+  public void credentialsTest() throws Exception {
+    String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
+    EthUtil.connectEthereum();
+    Credentials credentials = EthUtil.credentials(PRIVATE_KEY);
+    String voterAddress = credentials.getAddress();
+    System.out.println(voterAddress);
+  }
 
   @Test
   public void stringTest() {
@@ -56,10 +71,11 @@ public class contractTest {
     _voterAddress.add("0x5Af8713c57818216d4f69Fc60153Fa91E036b4D9");
     _voterAddress.add("0x850757399DEb8D3838C74B62935139a51f3A29d2");
     String _votename = "显而易见测试成功了呢2";
+    String txhash = "";
     // System.out.println(setUpService.getVoterList(_voterAddress, _votename));
     // System.out.println(setUpService.getVoterList(_voterAddress, _votename));
     // String output =
-    System.out.println(setUpService.getVoterList(_voterAddress, _votename));
+    System.out.println(setUpService.getVoterList(_voterAddress, _votename, txhash));
   }
 
   @Autowired
@@ -224,9 +240,8 @@ public class contractTest {
 
     DecVoting voting = DecVoting.load(contractAddress, web3j, credentials, new DefaultGasProvider());
     // Filter
-    // EthFilter filter = new EthFilter(DefaultBlockParameterName.LATEST,
-    // DefaultBlockParameterName.LATEST,
-    // contractAddress);
+    EthFilter filter = new EthFilter(DefaultBlockParameterName.LATEST, DefaultBlockParameterName.LATEST,
+        contractAddress);
     // voting.booleanEventEventFlowable(filter).subscribe(log ->
     // System.out.println(log.toString()));
     // voting.booleanEventEventFlowable(filter).subscribe(log ->
@@ -256,7 +271,7 @@ public class contractTest {
     // GAS_LIMIT).send().getContractAddress();
     // System.out.println("Deployed contract address:" + deployedContract);
 
-    // FIXME get instance
+    // get instance
     DecVoting voting = DecVoting.load("0xFbd4Ca99A4010870b69604Ffe12Ed8cF0B53F96A", web3j, credentials, GAS_PRICE,
         GAS_LIMIT);
     // 发起投票
