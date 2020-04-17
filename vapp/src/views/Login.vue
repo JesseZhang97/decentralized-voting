@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-13 18:15:22
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-21 02:40:20
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-15 19:04:39
  * @FilePath: /decentralized-voting/vapp/src/views/Login.vue
  * @Description: 用户登录页面
  -->
@@ -23,7 +23,7 @@
         <a href="javascript:;" class="log-btn" @click="login">Login</a>
     </div>
     <router-link to="/register"> <div class="log-text">没有帐号？点此注册</div> </router-link>
-    <div class="log-text">基于ethereum区块链技术{{msg}}</div>
+    <div class="log-text">基于ETHEREUM区块链技术{{msg}}</div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
 </template>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-14 03:10:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-07 22:04:06
+ * @LastEditTime: 2020-04-17 23:37:29
  * @FilePath: /decentralized-voting/backend/src/test/java/com/zz/backend/DemoApplicationTests.java
  * @Description: 
  */
@@ -10,6 +10,7 @@ package com.zz.backend;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //import java.util.List;
 
@@ -35,6 +36,27 @@ public class DemoApplicationTests {
 	@Resource
 	@Autowired
 	private UserMapper userMapper;
+
+	@Test
+	public void orgListTest() {
+		// QueryWrapper<User> wrapper = new QueryWrapper<>();
+		// wrapper.select("DISTINCT organization");
+		// List<Map<String, Object>> orgListFromDB = userMapper.selectMaps(wrapper);
+		// List<String> orgList = new ArrayList<>();
+		// for (Map<String, Object> m : orgListFromDB) { // 取list集合里的那一条Map集合
+		// for (String s : m.keySet()) { // 取map集合里的String类型的key，
+		// orgList.add(m.get(s).toString());
+		// // System.out.println(m.get(s));// 根据key迭代输出value
+		// }
+		// }
+		// System.out.println(orgList);
+		// return orgList;
+
+		QueryWrapper<User> wrapper = new QueryWrapper<>();
+		wrapper.eq("organization", "16022");
+		wrapper.select("name", "publickey");
+		System.out.println(userMapper.selectMaps(wrapper));
+	}
 
 	@Test
 	public void contextLoads() throws SQLException, CipherException {

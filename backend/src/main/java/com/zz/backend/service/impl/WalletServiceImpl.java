@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-20 02:00:39
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-24 20:10:54
+ * @LastEditTime: 2020-04-16 23:43:08
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/service/impl/WalletServiceImpl.java
  * @Description: eth钱包功能实现
  */
@@ -16,6 +16,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -59,6 +60,16 @@ public class WalletServiceImpl extends ServiceImpl<UserMapper, User> {
     // System.out.println(user);
     // System.out.println(wl);
     // int update = userMapper.updateById(user);
+    QueryWrapper<User> wrapper = new QueryWrapper<User>();// 已经生成过pair的User
+    wrapper.eq("id", Integer.valueOf(userID).intValue());
+    wrapper.isNotNull("publickey");
+    if (userMapper.selectOne(wrapper) != null) {
+      wl.setMnemonic("该用户已获取过公私钥对,请勿再次获取");
+      wl.setPrivatekey("该用户已获取过公私钥对,请勿再次获取");
+      wl.setPublickey("该用户已获取过公私钥对,请勿再次获取");
+      wl.setQrcode("该用户已获取过公私钥对");
+      return wl;
+    }
     userMapper.updateById(user);
     return wl;
   }

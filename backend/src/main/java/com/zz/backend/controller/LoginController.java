@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 01:53:30
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-03-28 04:04:21
+ * @LastEditTime: 2020-04-16 19:28:18
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/controller/LoginController.java
  * @Description: 
  */
@@ -37,7 +37,8 @@ public class LoginController {
             return new Result(400);
         } else {
             // session.setAttribute("user", user);
-            return new Result(200);
+            // return new Result(200);
+            return new Result(200, user.getName(), user.getPublickey());
         }
 
     }

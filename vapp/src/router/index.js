@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 03:27:40
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-10 22:10:43
+ * @LastEditTime: 2020-04-15 23:55:16
  * @FilePath: /decentralized-voting/vapp/src/router/index.js
  * @Description:
  */
@@ -16,7 +16,7 @@ export const constantRouterMap = [
 
   {
     path: "/login",
-    component: () => import("@/views/Login")
+    component: () => import("@/views/Login"),
   },
 
   { path: "/register", component: () => import("@/views/Register") },
@@ -24,29 +24,26 @@ export const constantRouterMap = [
   {
     path: "/home",
     component: () => import("@/views/Home"),
-    meta: {
-      requireAuth: true
-    }
   },
 
   {
     path: "/infopage",
-    component: () => import("@/views/InfoPaper")
+    component: () => import("@/views/InfoPaper"),
   },
 
   {
     path: "/home/createvote",
-    component: () => import("@/views/CreateVote")
+    component: () => import("@/views/CreateVote"),
   },
 
   {
     path: "/registervote",
-    component: () => import("@/views/RegisterVote")
-  }
+    component: () => import("@/views/RegisterVote"),
+  },
 ];
 
 export default new VueRouter({
   mode: "history", //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap //指定路由列表
+  routes: constantRouterMap, //指定路由列表
 });

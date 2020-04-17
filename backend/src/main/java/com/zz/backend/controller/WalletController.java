@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-20 19:25:12
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-06 04:17:15
+ * @LastEditTime: 2020-04-17 23:49:06
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/controller/WalletController.java
  * @Description: 生成钱包信息绑定用户
  */
@@ -30,6 +30,5 @@ public class WalletController {
   @ResponseBody
   public Wallet getWallet(@RequestParam(value = "id", required = true) String id) throws CipherException, IOException {
     return walletService.genWallet(id);
-    // TODO 用户一次绑定后 无法通过刷新网页再次更改
   }
 }
