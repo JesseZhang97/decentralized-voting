@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-11 04:19:02
+ * @LastEditTime: 2020-04-19 00:22:30
  * 
  * @Description: 
  * 
@@ -57,8 +57,9 @@ public class CastVoteServiceImpl {
     EthUtil.connectEthereum();
     DecVoting voting = EthUtil.loadContract(PRIVATE_KEY, _contractAddress);
     vd.setVoteName(voting.voteName().send());// 投票名称
-    vd.setVotingStartTime(voting.votingStartTime().send());// 投票开始时间
-    vd.setVotingEndTime(voting.votingEndTime().send());// 投票结束时间
+    // FIXME bigint and string problem
+    vd.setVotingStartTime(voting.votingStartTime().send().toString());// 投票开始时间
+    vd.setVotingEndTime(voting.votingEndTime().send().toString());// 投票结束时间
 
     List<String> candidatesList = new ArrayList<>();// 候选人名单
     int numOfCanditates = voting.numOfCandidates().send().intValue();
@@ -66,7 +67,7 @@ public class CastVoteServiceImpl {
       BigInteger newI = BigInteger.valueOf(i);
       candidatesList.add(voting.candidates(newI).send().toString());
     }
-    vd.setCandidates(candidatesList);
+    // vd.setCandidates(candidatesList);
     return vd;
   }
 

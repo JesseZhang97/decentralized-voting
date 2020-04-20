@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-10 18:59:32
+ * @LastEditTime: 2020-04-19 00:21:54
  * 
  * @Description: 
  */
@@ -49,12 +49,13 @@ public class fullTest {
     VoteData vd = new VoteData();
     vd.setCallerPRIVATEKEY(_callerPK);
     vd.setVoteName(_voteName);
-    vd.setRegistrationStartTime(_registrationStartTime);
-    vd.setRegistrationEndTime(_registrationEndTime);
-    vd.setVotingStartTime(_votingStartTime);
-    vd.setVotingEndTime(_votingEndTime);
-    vd.setVoterAddr(_voterAddress);
-    vd.setCandidates(_candidates);
+    // FIXME bigint and string problem
+    // vd.setRegistrationStartTime(_registrationStartTime);
+    // vd.setRegistrationEndTime(_registrationEndTime);
+    // vd.setVotingStartTime(_votingStartTime);
+    // vd.setVotingEndTime(_votingEndTime);
+    // vd.setVoterAddr(_voterAddress);
+    // vd.setCandidates(_candidates);
     String contractAddress = setUpService.getVoteData(vd);
     if (null != contractAddress) {
       System.out.println(contractAddress);

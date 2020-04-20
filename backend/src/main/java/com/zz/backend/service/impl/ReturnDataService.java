@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-17 21:35:30
  * @Author: zhen
- * @LastEditTime: 2020-04-17 23:39:50
+ * @LastEditTime: 2020-04-20 19:03:30
  * @Description: 
  */
 package com.zz.backend.service.impl;
@@ -46,7 +46,7 @@ public class ReturnDataService extends ServiceImpl<UserMapper, User> {
      */
     public List<Map<String, Object>> returnVoterList(String org) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("organization", "16022");
+        wrapper.eq("organization", org);
         wrapper.select("name", "publickey");
         // System.out.println(userMapper.selectMaps(wrapper));
         return userMapper.selectMaps(wrapper);

@@ -3,7 +3,7 @@
  * 
  * @Author: zero
  * 
- * @LastEditTime: 2020-04-10 18:28:10
+ * @LastEditTime: 2020-04-19 21:43:37
  * 
  * @Description:
  */
@@ -21,10 +21,8 @@ public class UnixTime {
    * @param format
    * @return String
    */
-  public static String timeStampToDate(BigInteger seconds, String format) {
-    if (format == null || format.isEmpty()) {
-      format = "yyyy-MM-dd HH:mm";
-    }
+  public static String timeStampToDate(String seconds) {
+    String format = "yyyy-MM-dd HH:mm";
     SimpleDateFormat sdf = new SimpleDateFormat(format);
     return sdf.format(new Date(Long.valueOf(seconds + "000")));
   }
@@ -39,5 +37,4 @@ public class UnixTime {
     BigInteger nowTimeStamp = BigInteger.valueOf(time);
     return nowTimeStamp;
   }
-
 }

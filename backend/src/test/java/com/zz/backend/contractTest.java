@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-11 04:18:07
+ * @LastEditTime: 2020-04-20 20:27:38
  * 
  * @Description:
  */
@@ -16,9 +16,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zz.backend.contract.DecVoting;
+import com.zz.backend.entity.Contract;
 import com.zz.backend.entity.Mail;
 import com.zz.backend.entity.VoteData;
+import com.zz.backend.service.impl.ContractServiceImpl;
 import com.zz.backend.service.impl.EmailServiceImpl;
 import com.zz.backend.service.impl.SetupVotingServiceImpl;
 import com.zz.backend.util.EthUtil;
@@ -38,6 +41,21 @@ import org.web3j.crypto.Credentials;
 
 @SpringBootTest
 public class contractTest {
+
+  @Autowired
+  ContractServiceImpl contractService;
+
+  @Test
+  public void pageTest() {
+    String ownerAddress = "0x863197E5F3807bc75742CB2397Aa8158A91203b2";
+    Page<Contract> page = contractService.returnContractList(ownerAddress);
+    System.out.println(page.getRecords());
+    System.out.println(page.getTotal());
+    System.out.println(page.getCurrent());
+    System.out.println(page.getSize());
+    System.out.println(page.hasNext());
+  }
+
   @Test
   public void unixTimeTest() throws Exception {
     long time = System.currentTimeMillis();
@@ -75,7 +93,8 @@ public class contractTest {
     // System.out.println(setUpService.getVoterList(_voterAddress, _votename));
     // System.out.println(setUpService.getVoterList(_voterAddress, _votename));
     // String output =
-    System.out.println(setUpService.getVoterList(_voterAddress, _votename, txhash));
+    // System.out.println(setUpService.getVoterList(_voterAddress, _votename,
+    // txhash));
   }
 
   @Autowired
@@ -145,12 +164,14 @@ public class contractTest {
     VoteData vd = new VoteData();
     vd.setCallerPRIVATEKEY(_callerPK);
     vd.setVoteName(_voteName);
-    vd.setRegistrationStartTime(_registrationStartTime);
-    vd.setRegistrationEndTime(_registrationEndTime);
-    vd.setVotingStartTime(_votingStartTime);
-    vd.setVotingEndTime(_votingEndTime);
-    vd.setVoterAddr(_voterAddress);
-    vd.setCandidates(_candidates);
+    // FIXME bigint and string problem
+    // vd.setRegistrationStartTime(_registrationStartTime);
+    // vd.setRegistrationEndTime(_registrationEndTime);
+    // vd.setVotingStartTime(_votingStartTime);
+    // vd.setVotingEndTime(_votingEndTime);
+    // vd.setVoterAddr(_voterAddress);
+
+    // vd.setCandidates(_candidates);
 
     String hash = setUpService.getVoteData(vd);
     System.out.println(hash);

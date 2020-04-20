@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-04 05:02:55
  * @Author: zhen
- * @LastEditTime: 2020-04-18 00:33:08
+ * @LastEditTime: 2020-04-18 23:17:19
  * @Description: 
  */
 package com.zz.backend.controller;
@@ -32,9 +32,7 @@ public class SetupVoteController {
   @PostMapping(value = "/api/setup")
   @ResponseBody
   public String setupVote(@RequestBody VoteData requestVoteData) throws Exception {
-    if (requestVoteData == null) {
-      return "-1";
-    }
+
     return setUpService.getVoteData(requestVoteData);
   }
 
