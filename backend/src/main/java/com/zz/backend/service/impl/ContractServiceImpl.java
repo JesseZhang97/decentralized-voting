@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-20 19:39:49
+ * @LastEditTime: 2020-04-20 21:57:15
  * 
  * @Description: 
  */
@@ -12,7 +12,6 @@ package com.zz.backend.service.impl;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zz.backend.entity.Contract;
@@ -26,6 +25,9 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> {
   @Autowired
   private ContractMapper contractMapper;
 
+  /**
+   * 数据库返回分页数据对象
+   */
   public Page<Contract> returnContractList(String ownerAddress) {
     Page<Contract> page = new Page<Contract>(1, 1);
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-16 01:11:47
  * @Author: zhen
- * @LastEditTime: 2020-04-17 19:15:44
+ * @LastEditTime: 2020-04-20 20:49:41
  * @Description:
  */
 import Vue from 'vue'
@@ -19,34 +19,9 @@ const store = new Vuex.Store({
                 type: 'md-home', // icon类型
                 text: '主页', // 文本内容
             },
-
-            // {
-            //     name: 'createvote',
-            //     size: 18,
-            //     type: 'ios-paper',
-            //     text: '发起投票',
-            // },
-            // {
-            //     name: 'msg',
-            //     size: 18,
-            //     type: 'md-list-box',
-            //     text: '投票列表',
-            // },
-            // {
-            //     name: 'userinfo',
-            //     size: 18,
-            //     type: 'md-settings',
-            //     text: '个人设置',
-            // },
-            //
-            //
-            //
-            //
-            //
-            //
             {
                 text: '区块链投票',
-                type: 'ios-construct',
+                type: 'md-analytics',
                 children: [
                     {
                         name: 't1',
@@ -55,8 +30,8 @@ const store = new Vuex.Store({
                         text: '区块链信息',
                     },
                     {
-                        text: '投票',
-                        type: 'ios-paper',
+                        text: '设定投票',
+                        type: 'md-checkbox',
                         children: [
                             {
                                 name: 'createvote',
@@ -68,12 +43,33 @@ const store = new Vuex.Store({
                                 type: 'md-list-box',
                                 text: '投票列表',
                             },
+                            // {
+                            //     type: 'md-person',
+                            //     name: 'userinfo',
+                            //     text: '基本资料',
+                            // },
+                        ],
+                    },
+                    {
+                        text: '参与投票',
+                        type: 'md-create',
+                        children: [
                             {
-                                type: 'md-person',
-                                name: 'userinfo',
-                                text: '基本资料',
+                                name: 'msg',
+                                type: 'md-finger-print',
+                                text: '注册投票',
+                            },
+                            {
+                                name: 't1',
+                                type: 'md-done-all',
+                                text: '给出选票',
                             },
                         ],
+                    },
+                    {
+                        type: 'md-person',
+                        name: 'userinfo',
+                        text: '投票结果与验证',
                     },
                 ],
             },
