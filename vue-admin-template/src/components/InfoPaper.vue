@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-19 02:36:25
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-17 01:14:55
+ * @LastEditTime: 2020-04-24 20:27:05
  * @FilePath: /decentralized-voting/vapp/src/views/InfoPaper.vue
  * @Description:
 -->
@@ -81,7 +81,7 @@ export default {
         return {
             img: '',
             secretVisible: false,
-            timer: 1,
+            timer: 5,
             canClick: true,
             bt_content: '我已知晓',
             form: {
@@ -145,7 +145,7 @@ export default {
             + '私钥：'
             + this.form.prikey
             + '\n'
-            + '公钥（地址）：'
+            + '地址：'
             + this.form.pubkey,
                 ],
                 { type: 'text/plain;charset=utf-8' }

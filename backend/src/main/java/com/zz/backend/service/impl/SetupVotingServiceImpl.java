@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-20 17:43:59
+ * @LastEditTime: 2020-04-24 22:38:01
  * 
  * @Description:用户设定投票内容
  */
@@ -62,7 +62,7 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     // FIXME 只有在实例化的时候获得时间,需要动态时间
     // if (_registrationStartTime.compareTo(UnixTime.getNowTimeStamp()) < 0) {
     // return TIME_ERROR;
-    // }code
+    // }
     if (_registrationStartTime.compareTo(_registrationEndTime) > 0) {
       return TIME_ERROR;
     }
@@ -88,7 +88,6 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
       setVoterList(voterList, contractAddress, vd);
       setContract2DB(vd, contractAddress);
     }
-    // EthUtil.closeEthereum();
     return contractAddress;
   }
 
@@ -149,10 +148,10 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     Contract contract = new Contract();
     contract.setAddress(contractAddress);
     contract.setOwner(vd.getCallerPUBLICKEY());
-    contract.setRegistrationStartTime(vd.getRegistrationStartTime());
-    contract.setRegistrationEndTime(vd.getRegistrationEndTime());
-    contract.setVotingStartTime(vd.getVotingStartTime());
-    contract.setVotingEndTime(vd.getVotingEndTime());
+    contract.setRegistrationStartTime(new BigInteger(vd.getRegistrationStartTime()));
+    contract.setRegistrationEndTime(new BigInteger(vd.getRegistrationEndTime()));
+    contract.setVotingStartTime(new BigInteger(vd.getVotingStartTime()));
+    contract.setVotingEndTime(new BigInteger(vd.getVotingEndTime()));
 
     if (vd != null) {
       int insert = contractMapper.insert(contract);

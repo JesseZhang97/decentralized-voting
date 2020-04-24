@@ -3,7 +3,7 @@
  * 
  * @Author: zero
  * 
- * @LastEditTime: 2020-04-19 21:43:37
+ * @LastEditTime: 2020-04-24 21:03:58
  * 
  * @Description:
  */
@@ -33,7 +33,7 @@ public class UnixTime {
    * @return: BigInteger
    */
   public static BigInteger getNowTimeStamp() {
-    long time = System.currentTimeMillis();
+    long time = System.currentTimeMillis() / 1000;
     BigInteger nowTimeStamp = BigInteger.valueOf(time);
     return nowTimeStamp;
   }

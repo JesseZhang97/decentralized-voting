@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-06 19:20:32
  * @Author: zhen
- * @LastEditTime: 2020-04-20 17:34:28
+ * @LastEditTime: 2020-04-22 22:34:45
  * @Description: 
  */
 package com.zz.backend.entity;
@@ -31,6 +31,10 @@ public class VoteData {
   // private List<String> candidates;
   private String[] voterAddr;
   private String[] candidates;
+  /********************************** */
   private String callerPRIVATEKEY;
   private String callerPUBLICKEY;
+  private String contractAddress;
+  /********************************** */
+  private String vote;
 }

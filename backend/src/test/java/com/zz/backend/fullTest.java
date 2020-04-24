@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-19 00:21:54
+ * @LastEditTime: 2020-04-24 22:07:54
  * 
  * @Description: 
  */
@@ -69,23 +69,30 @@ public class fullTest {
 
   @Test
   public void registrationVoter1() throws Exception {
-    String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
+    String _contractAddress = "0x6380a6d24dc9c9660a988f1b3830dfd559fce197";
     String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
-    System.out.println(registrationService.registrationVoter(_contractAddress, PRIVATE_KEY));
+    VoteData vd = new VoteData();
+    vd.setCallerPRIVATEKEY(PRIVATE_KEY);
+    vd.setContractAddress(_contractAddress);
+    System.out.println(registrationService.registrationVoter(vd));
   }
 
   @Test
   public void registrationVoter2() throws Exception {
     String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
     String PRIVATE_KEY = "0x83e686c5b57dcedf30caa30299b7027086e045d7e252fa730332ed046c032b72";
-    System.out.println(registrationService.registrationVoter(_contractAddress, PRIVATE_KEY));
+    // System.out.println(registrationService.registrationVoter(_contractAddress,
+    // PRIVATE_KEY));
   }
 
   @Test
   public void endRegistration() throws Exception {
-    String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
+    String _contractAddress = "0x36cd954e7d4d07ae8b1bfb45c0b369e48b575250";
     String PRIVATE_KEY = "0x1d6c2a391786e3f9f6f96d55eac91a1b70875f848e982393ed6ad2fd093c4b3e";
-    System.out.println(registrationService.endRegistration(_contractAddress, PRIVATE_KEY));
+    VoteData vd = new VoteData();
+    vd.setCallerPRIVATEKEY(PRIVATE_KEY);
+    vd.setContractAddress(_contractAddress);
+    System.out.println(registrationService.endRegistration(vd));
   }
 
   @Autowired
@@ -93,13 +100,16 @@ public class fullTest {
 
   @Test
   public void displayVoteInfo() throws Exception {
-    String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
-    String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
-    VoteData vd = castVoteService.returnVoteData(_contractAddress, PRIVATE_KEY);
-    System.out.println(vd.getVoteName());
-    System.out.println(vd.getVotingStartTime());
-    System.out.println(vd.getVotingEndTime());
-    System.out.println(vd.getCandidates());
+    String _contractAddress = "0xdb64495e023f643e60150b0d5842542668be3d8d";
+    String PRIVATE_KEY = "0x1d6c2a391786e3f9f6f96d55eac91a1b70875f848e982393ed6ad2fd093c4b3e";
+    VoteData vd = new VoteData();
+    vd.setCallerPRIVATEKEY(PRIVATE_KEY);
+    vd.setContractAddress(_contractAddress);
+    VoteData vd1 = castVoteService.returnVoteData(vd);
+    System.out.println(vd1.getVoteName());
+    System.out.println(vd1.getVotingStartTime());
+    System.out.println(vd1.getVotingEndTime());
+    System.out.println(vd1.getCandidates());
   }
 
   @Test
@@ -107,7 +117,8 @@ public class fullTest {
     String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
     String PRIVATE_KEY = "0x019c25498e5e32e022b894f08151416f45551281266787c14d7ab0e9012ed8af";
     String vote = "张祯";
-    System.out.println(castVoteService.castVote(_contractAddress, PRIVATE_KEY, vote));
+    // System.out.println(castVoteService.castVote(_contractAddress, PRIVATE_KEY,
+    // vote));
   }
 
   @Test
@@ -115,7 +126,8 @@ public class fullTest {
     String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
     String PRIVATE_KEY = "0x83e686c5b57dcedf30caa30299b7027086e045d7e252fa730332ed046c032b72";
     String vote = "张三";
-    System.out.println(castVoteService.castVote(_contractAddress, PRIVATE_KEY, vote));
+    // System.out.println(castVoteService.castVote(_contractAddress, PRIVATE_KEY,
+    // vote));
   }
 
   @Test
@@ -132,7 +144,7 @@ public class fullTest {
   public void endVoting() throws Exception {
     String _contractAddress = "0x2c28d08d9f0628810fc3c03433b58106f42b9d76";
     String PRIVATE_KEY = "0x1d6c2a391786e3f9f6f96d55eac91a1b70875f848e982393ed6ad2fd093c4b3e";
-    System.out.println(castVoteService.endVoting(_contractAddress, PRIVATE_KEY));
+    // System.out.println(castVoteService.endVoting(_contractAddress, PRIVATE_KEY));
   }
 
   @Autowired

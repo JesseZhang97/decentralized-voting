@@ -1,10 +1,12 @@
 /*
  * @Date: 2020-04-20 16:19:44
  * @Author: zhen
- * @LastEditTime: 2020-04-20 16:30:08
+ * @LastEditTime: 2020-04-21 21:45:02
  * @Description: 
  */
 package com.zz.backend.entity;
+
+import java.math.BigInteger;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -28,14 +30,14 @@ public class Contract {
   private String owner;
   // 注册开始时间
   @TableField(value = "registrationStartTime")
-  private String registrationStartTime;
+  private BigInteger registrationStartTime;
   // 注册结束时间
   @TableField(value = "registrationEndTime")
-  private String registrationEndTime;
+  private BigInteger registrationEndTime;
   // 投票开始时间
   @TableField(value = "votingStartTime")
-  private String votingStartTime;
+  private BigInteger votingStartTime;
   // 投票结束时间
   @TableField(value = "votingEndTime")
-  private String votingEndTime;
+  private BigInteger votingEndTime;
 }

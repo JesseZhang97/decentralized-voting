@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-16 00:54:41
  * @Author: zhen
- * @LastEditTime: 2020-04-19 00:35:16
+ * @LastEditTime: 2020-04-25 02:16:41
  * @Description: 
  */
 module.exports = {
@@ -56,6 +56,7 @@ module.exports = {
         'globals': {
             'BigInt': true
         },
+        'no-extend-native': 0,
     },
     parserOptions: {
         parser: 'babel-eslint',

@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-20 20:27:38
+ * @LastEditTime: 2020-04-22 16:17:22
  * 
  * @Description:
  */
@@ -48,7 +48,7 @@ public class contractTest {
   @Test
   public void pageTest() {
     String ownerAddress = "0x863197E5F3807bc75742CB2397Aa8158A91203b2";
-    Page<Contract> page = contractService.returnContractList(ownerAddress);
+    Page<Contract> page = contractService.returnContractList(ownerAddress, 2);
     System.out.println(page.getRecords());
     System.out.println(page.getTotal());
     System.out.println(page.getCurrent());

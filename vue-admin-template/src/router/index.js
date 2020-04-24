@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-16 01:21:17
  * @Author: zhen
- * @LastEditTime: 2020-04-17 02:06:33
+ * @LastEditTime: 2020-04-24 17:49:15
  * @Description:
  */
 import Vue from 'vue'
@@ -44,12 +44,12 @@ export const asyncRoutes = {
         meta: { title: 'Home' },
         component: () => import('../views/Home.vue'),
     },
-    t1: {
-        path: 't1',
-        name: 't1',
-        meta: { title: 'BlockChain' },
-        component: () => import('../views/T1.vue'),
-    },
+    // t1: {
+    //     path: 't1',
+    //     name: 't1',
+    //     meta: { title: 'BlockChain' },
+    //     component: () => import('../views/T1.vue'),
+    // },
     createvote: {
         path: 'createvote',
         name: 'createvote',
@@ -67,6 +67,30 @@ export const asyncRoutes = {
         name: 'userinfo',
         meta: { title: '用户信息' },
         component: () => import('../views/UserInfo.vue'),
+    },
+    contractlist: {
+        path: 'contractlist',
+        name: 'contractlist',
+        meta: { title: '投票列表' },
+        component: () => import('../views/ContractList.vue'),
+    },
+    registervote: {
+        path: 'registervote',
+        name: 'registervote',
+        meta: { title: '注册投票' },
+        component: () => import('../views/RegisterVote.vue'),
+    },
+    castvote: {
+        path: 'castvote',
+        name: 'castvote',
+        meta: { title: 'castvote' },
+        component: () => import('../views/CastVote.vue'),
+    },
+    tallyvote: {
+        path: 'tallyvote',
+        name: 'tallyvote',
+        meta: { title: 'tallyvote' },
+        component: () => import('../views/TallyVote.vue'),
     },
 }
 

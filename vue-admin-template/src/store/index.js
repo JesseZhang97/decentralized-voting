@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-16 01:11:47
  * @Author: zhen
- * @LastEditTime: 2020-04-20 20:49:41
+ * @LastEditTime: 2020-04-24 17:49:29
  * @Description:
  */
 import Vue from 'vue'
@@ -24,7 +24,7 @@ const store = new Vuex.Store({
                 type: 'md-analytics',
                 children: [
                     {
-                        name: 't1',
+                        name: 'msg',
                         size: 18,
                         type: 'md-information-circle',
                         text: '区块链信息',
@@ -39,7 +39,7 @@ const store = new Vuex.Store({
                                 text: '发起投票',
                             },
                             {
-                                name: 'msg',
+                                name: 'contractlist',
                                 type: 'md-list-box',
                                 text: '投票列表',
                             },
@@ -55,20 +55,20 @@ const store = new Vuex.Store({
                         type: 'md-create',
                         children: [
                             {
-                                name: 'msg',
+                                name: 'registervote',
                                 type: 'md-finger-print',
                                 text: '注册投票',
                             },
                             {
-                                name: 't1',
+                                name: 'castvote',
                                 type: 'md-done-all',
                                 text: '给出选票',
                             },
                         ],
                     },
                     {
-                        type: 'md-person',
-                        name: 'userinfo',
+                        type: 'md-stats',
+                        name: 'tallyvote',
                         text: '投票结果与验证',
                     },
                 ],

@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-20 21:56:54
+ * @LastEditTime: 2020-04-21 22:51:18
  * 
  * @Description: 
  */
@@ -15,8 +15,9 @@ import com.zz.backend.service.impl.ContractServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,10 +27,10 @@ public class ContractListController {
   ContractServiceImpl contractService;
 
   @CrossOrigin
-  @PostMapping(value = "api/contractlist")
+  @RequestMapping(value = "api/contractlist", method = RequestMethod.GET)
   @ResponseBody
 
-  public Page<Contract> returnPage(@RequestBody String ownerAddress) {
-    return contractService.returnContractList(ownerAddress);
+  public Page<Contract> returnPage(@RequestParam String ownerAddress, long pageIndex) {
+    return contractService.returnContractList(ownerAddress, pageIndex);
   }
 }

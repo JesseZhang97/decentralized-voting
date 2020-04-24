@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-04-17 00:54:06
  * @Author: zhen
- * @LastEditTime: 2020-04-20 18:09:53
+ * @LastEditTime: 2020-04-22 16:33:31
  * @Description: 设定投票参数
  -->
 <template>
@@ -188,7 +188,7 @@ export default {
             voterList: [],
             targetKeys: [],
             contractAddress: '',
-            modalLoading: true,
+            modalLoading: false,
             spinShow: false,
         }
     },

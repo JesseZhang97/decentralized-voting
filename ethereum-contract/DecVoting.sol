@@ -86,6 +86,9 @@ contract DecVoting {
 
     function endRegistrationPhase() public inState(State.REGISTRATION) returns (bool) {
         state = State.VOTING;
+        if (state != State.VOTING) {
+            return false;
+        }
         return true;
     }
 
@@ -108,7 +111,10 @@ contract DecVoting {
 
     function endVotingPhase() public inState(State.VOTING) returns (bool) {
         state = State.READY_TO_TALLY;
-        return true;
+        if (state != State.READY_TO_TALLY) {
+            return false;
+        }
+            return true;
     }
 
 
@@ -119,7 +125,7 @@ contract DecVoting {
         for( uint j = 0; j < votes.length; j++) {
             electionResults[votes[j]] += 1;
         }
-        state = State.END_TALLY;
+        // state = State.END_TALLY;
     }
     function numOfVoters() public view returns (uint){
         return voterAddress.length;

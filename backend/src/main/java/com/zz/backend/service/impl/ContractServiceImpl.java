@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-20 21:57:15
+ * @LastEditTime: 2020-04-21 22:53:27
  * 
  * @Description: 
  */
@@ -28,8 +28,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> {
   /**
    * 数据库返回分页数据对象
    */
-  public Page<Contract> returnContractList(String ownerAddress) {
-    Page<Contract> page = new Page<Contract>(1, 1);
+  public Page<Contract> returnContractList(String ownerAddress, long pageIndex) {
+    Page<Contract> page = new Page<Contract>(pageIndex, 1);
 
     QueryWrapper<Contract> wrapper = new QueryWrapper<>();
     wrapper.eq("owner", ownerAddress);
