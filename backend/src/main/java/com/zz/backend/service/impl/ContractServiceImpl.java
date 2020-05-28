@@ -3,13 +3,11 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-21 22:53:27
+ * @LastEditTime: 2020-05-15 16:33:52
  * 
  * @Description: 
  */
 package com.zz.backend.service.impl;
-
-import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,7 +30,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> {
     Page<Contract> page = new Page<Contract>(pageIndex, 1);
 
     QueryWrapper<Contract> wrapper = new QueryWrapper<>();
-    wrapper.eq("owner", ownerAddress);
+    wrapper.eq("owner", ownerAddress).orderByDesc("registrationStartTime");
 
     Page<Contract> newPage = contractMapper.selectPage(page, wrapper);
     return newPage;

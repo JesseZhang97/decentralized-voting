@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-24 22:38:01
+ * @LastEditTime: 2020-05-15 16:52:57
  * 
  * @Description:用户设定投票内容
  */
@@ -42,7 +42,6 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
    * @throws Exception
    */
   public String getVoteData(VoteData vd) throws Exception {
-    String ERROR_msg = "ETHEREUM TRANSITION ERROR";
     String TIME_ERROR = "TIME ERROR";
     // get caller ADDRESS and DEPLOY
     EthUtil.connectEthereum();
@@ -59,10 +58,9 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     // List<String> _voterAddr = vd.getVoterAddr();
     // List<String> _candidates = vd.getCandidates();
 
-    // FIXME 只有在实例化的时候获得时间,需要动态时间
-    // if (_registrationStartTime.compareTo(UnixTime.getNowTimeStamp()) < 0) {
-    // return TIME_ERROR;
-    // }
+    if (_registrationStartTime.compareTo(UnixTime.getNowTimeStamp()) < 0) {
+      return TIME_ERROR;
+    }
     if (_registrationStartTime.compareTo(_registrationEndTime) > 0) {
       return TIME_ERROR;
     }
@@ -109,10 +107,8 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     // 找到voterList地址对应的数据库邮件地址
     User user = new User();
     String mailList = "";
-    // TODO QueryWrapper<User> wrapper = new QueryWrapper<User>();
     for (int i = 0; i < voterList.size(); i++) {
       user.setPublickey(voterList.get(i));
-      // TODO 空指针问题
       QueryWrapper<User> wrapper = new QueryWrapper<User>();
       wrapper.eq("publickey", user.getPublickey());
       // userMapper.selectOne(wrapper).getEmail();
@@ -128,6 +124,7 @@ public class SetupVotingServiceImpl extends ServiceImpl<UserMapper, User> {
     Mail ml = new Mail();
     ml.setFrom("597375428@qq.com");
     ml.setTo(mailList);
+    System.out.println(mailList);
     ml.setSubject("您有新的可参与投票活动");
     ml.setText("您好,\n你有一个新的可参与投票,投票活动名为：" + vd.getVoteName() + "\n可注册时间为:" + rgStart + "--" + rgEnd + "\n可投票时间为:"
         + vtStart + "--" + vtEnd + "\n投票地址为：" + contractAddress);

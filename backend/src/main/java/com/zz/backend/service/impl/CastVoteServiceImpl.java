@@ -3,7 +3,7 @@
  * 
  * @Author: zhen
  * 
- * @LastEditTime: 2020-04-24 22:38:14
+ * @LastEditTime: 2020-05-12 17:00:51
  * 
  * @Description: 
  * 
@@ -12,8 +12,6 @@
 package com.zz.backend.service.impl;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.zz.backend.contract.DecVoting;
 import com.zz.backend.entity.VoteData;
@@ -93,7 +91,6 @@ public class CastVoteServiceImpl {
 
   // 结束投票阶段
   public boolean endVoting(VoteData vd) throws Exception {
-    // TODO 计时器,时间unix time,到时调用方法 OR 遍历循环mapper后如果全为true调用
     String _contractAddress = vd.getContractAddress();
     String PRIVATE_KEY = vd.getCallerPRIVATEKEY();
     EthUtil.connectEthereum();

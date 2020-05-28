@@ -79,7 +79,6 @@ public class RegistrationServiceImpl {
   }
 
   public boolean endRegistration(VoteData vd) throws Exception {
-    // TODO 计时器,时间unix time,到时调用方法 OR 遍历循环mapper后如果全为true调用
     String _contractAddress = vd.getContractAddress();
     String PRIVATE_KEY = vd.getCallerPRIVATEKEY();
     EthUtil.connectEthereum();

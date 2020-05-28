@@ -1,13 +1,10 @@
 /*
  * @Date: 2020-04-06 19:20:32
  * @Author: zhen
- * @LastEditTime: 2020-04-22 22:34:45
+ * @LastEditTime: 2020-05-12 17:00:35
  * @Description: 
  */
 package com.zz.backend.entity;
-
-import java.math.BigInteger;
-import java.util.List;
 
 import lombok.Data;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-03-15 01:10:41
- * @LastEditors: zhen
- * @LastEditTime: 2020-03-24 00:11:19
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-05-11 22:13:53
  * @FilePath: /decentralized-voting/backend/src/main/java/com/zz/backend/config/CorsConfig.java
  * @Description: 
  */
@@ -24,7 +24,7 @@ public class CorsConfig {
         // 你需要跨域的地址 注意这里的 127.0.0.1 != localhost
         // * 表示对所有的地址都可以访问
         // corsConfiguration.addAllowedOrigin("http://localhost:8080");
-        corsConfiguration.addAllowedOrigin("http://localhost:8080");
+        corsConfiguration.addAllowedOrigin("*");
         // 跨域的请求头
         corsConfiguration.addAllowedHeader("*"); // 2
         // 跨域的请求方法

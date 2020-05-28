@@ -1,27 +1,27 @@
 /*
  * @Date: 2020-03-14 03:10:38
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-04-17 23:37:29
+ * @LastEditTime: 2020-05-12 17:05:16
  * @FilePath: /decentralized-voting/backend/src/test/java/com/zz/backend/DemoApplicationTests.java
  * @Description: 
  */
 package com.zz.backend;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Map;
 
 //import java.util.List;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
+// import javax.sql.DataSource;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zz.backend.mapper.UserMapper;
 import com.zz.backend.entity.User;
-import com.zz.backend.entity.Wallet;
-import com.zz.backend.service.impl.SetupVotingServiceImpl;
+// import com.zz.backend.entity.Wallet;
+// import com.zz.backend.service.impl.SetupVotingServiceImpl;
 import com.zz.backend.service.impl.WalletServiceImpl;
 
 import org.beykery.eth.WillWallet;
@@ -142,13 +142,13 @@ public class DemoApplicationTests {
 		User user = new User();
 
 		WillWallet wa = WillWallet.createWithMnemonic(null, "m/44'/60'/0'/0/0");
-		String mnemonic = wa.getMnemonic();
-		String pk = wa.getPrivateKey();
+		// String mnemonic = wa.getMnemonic();
+		// String pk = wa.getPrivateKey();
 		String addr = wa.getAddress();
 
 		user.setId(23);
 		user.setPublickey(addr);
-		int update = userMapper.updateById(user);
+		// int update = userMapper.updateById(user);
 		// user.setPublickey(wl.getPublickey());
 	}
 

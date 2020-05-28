@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-04-08 21:21:47
  * @Author: zhen
- * @LastEditTime: 2020-04-25 02:38:11
+ * @LastEditTime: 2020-05-12 17:01:41
  * @Description: 
  */
 package com.zz.backend.service.impl;
@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zz.backend.contract.DecVoting;
 import com.zz.backend.entity.TallyResult;
 import com.zz.backend.entity.VoteData;
